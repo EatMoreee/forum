@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.QuestionExMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.Model.Question">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="tag" jdbcType="VARCHAR" property="tag" />
+        <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate" />
+        <result column="gmt_modified" jdbcType="BIGINT" property="gmtModified" />
+        <result column="creator" jdbcType="INTEGER" property="creator" />
+        <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
+        <result column="view_count" jdbcType="INTEGER" property="viewCount" />
+        <result column="like_count" jdbcType="INTEGER" property="likeCount" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.Model.Question">
+        <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    </resultMap>
+    <update id="incView" parameterType="com.example.demo.Model.Question">
+        update question
+        set view_count = view_count + #{viewCount,jdbcType=INTEGER}
+        where id = #{id}
+    </update>
+
+    <update id="incComment" parameterType="com.example.demo.Model.Question">
+        update question
+        set comment_count = comment_count + #{commentCount,jdbcType=INTEGER}
+        where id = #{id}
+    </update>
+
+    <select id="selectRelate" parameterType="com.example.demo.Model.Question" resultMap="BaseResultMap">
+        select * from question where id != #{id} and tag regexp #{tag}
+    </select>
+</mapper>
