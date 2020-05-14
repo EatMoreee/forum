@@ -28,7 +28,11 @@
                     <span style="font-size: 12px;font-weight: normal;color: #999">
                         <span th:text="${question.commentCount}"></span>个回复 ·
                         <span th:text="${question.viewCount}"></span>次浏览 ·
-                        <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                        <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span> .
+                        <a th:href="@{'/publish/'+${question.id}}" style="color:#999;"
+                           th:if="${session.user != null && session.user.id == question.creator}">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
+                    </a>
                     </span>
                 </div>
             </div>
