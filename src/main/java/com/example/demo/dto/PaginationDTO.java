@@ -8,8 +8,8 @@ import java.util.List;
 import static java.lang.Integer.*;
 
 @Data
-public class PaginationDTO {
-    private List<QuestionDTO> questions;
+public class PaginationDTO <T>{
+    private List<T> data;
     private boolean showPrevious;
     private boolean showFirstPage;
     private boolean showNext;
