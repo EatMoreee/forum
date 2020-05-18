@@ -4,6 +4,7 @@ import com.example.demo.Model.User;
 import com.example.demo.dto.PaginationDTO;
 import com.example.demo.service.NotificationService;
 import com.example.demo.service.QuestionService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ public class ProfileController {
 
     @Autowired
     private NotificationService notificationService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/profile/{action}")
     public String profile(HttpServletRequest request,
@@ -41,6 +45,11 @@ public class ProfileController {
             model.addAttribute("section","replies");
             model.addAttribute("sectionName","最新回复");
             model.addAttribute("pagination", paginationDTO);
+        }
+        else if ("information".equals(action)) {
+            model.addAttribute("section", "information");
+            model.addAttribute("sectionName", "个人资料");
+            model.addAttribute("user", user);
         }
         return "profile";
     }

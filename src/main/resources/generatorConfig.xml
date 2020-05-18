@@ -29,6 +29,7 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="notification" domainObjectName="Notification" ></table>
+        <table tableName="recommend" domainObjectName="Recommend" ></table>
+        <table tableName="share" domainObjectName="Share"></table>
     </context>
 </generatorConfiguration>

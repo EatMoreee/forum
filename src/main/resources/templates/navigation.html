@@ -13,15 +13,15 @@
             </div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">题解</span>
+                    <span class="sr-only">课程推荐</span>
                 </button>
-                <a class="navbar-brand" href="/">题解</a>
+                <a class="navbar-brand" href="/recommend">课程推荐</a>
             </div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">校园周边</span>
+                    <span class="sr-only">刷题</span>
                 </button>
-                <a class="navbar-brand" href="/">校园周边</a>
+                <a class="navbar-brand" href="/code">刷题</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -32,14 +32,19 @@
                     <button type="submit" class="btn btn-default">搜索</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li th:if="${session.user != null}">
-                        <a href="/publish">提问</a>
-                    </li>
-                    <li th:if="${session.user != null}">
-                        <a href="/publish">发表</a>
-                    </li>
-                    <li th:if="${session.user != null}">
-                        <a href="/publish">分享</a>
+                    <li class="dropdown" th:if="${session.user != null}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <span>发帖</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/publish">讨论区</a></li>
+                            <li><a href="/recommendation">课程推荐</a></li>
+                            <li><a href="/solution">Coding</a></li>
+                            <li><a href="/record">校园周边</a></li>
+                            <li><a href="/sharing">资源共享</a></li>
+                        </ul>
                     </li>
                     <li><a href="/profile/replies">通知<span class="badge" th:text="${session.unReadCount}"></span></a></li>
                     <li class="dropdown" th:if="${session.user != null}">
@@ -49,6 +54,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
+                            <li><a href="/profile/information">个人资料</a></li>
                             <li><a href="/profile/questions">我的问题</a></li>
                             <li><a href="/logout">退出登录</a></li>
                         </ul>

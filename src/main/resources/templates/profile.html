@@ -49,7 +49,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'information'}">
+                <u1>
+                    <h4 th:text="${'用户名:' + user.name}"></h4>
+                    <span style="font-size: 30px">头像:</span>
+                    <img th:src="${user.avatarUrl}" style="height: 50px; width: 50px">
+                    <br>
+                    <h3><span th:text="${'等级：' + user.grade}"></span></h3>
+                    <h3><span th:text="${'经验值:' + user.empiricalValue}"></span></h3>
+                    <button class="btn btn-success">修改密码</button>
+                </u1>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'replies' || section == 'questions'}">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
                         <li th:if="${pagination.showFirstPage}">
@@ -83,6 +94,7 @@
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="list-group">
+                <a href="/profile/information" th:class="${section == 'information'}? 'active list-group-item': 'list-group-item'" >个人资料</a>
                 <a href="/profile/questions" th:class="${section == 'questions'}? 'active list-group-item': 'list-group-item'" >我的问题</a>
                 <a href="/profile/replies" th:class="${section == 'replies'}? 'active list-group-item': 'list-group-item'">
                     最新回复<span class="badge" th:text="${session.unReadCount}"></span>
