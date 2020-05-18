@@ -23,8 +23,6 @@ public class ProfileController {
     @Autowired
     private NotificationService notificationService;
 
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/profile/{action}")
     public String profile(HttpServletRequest request,

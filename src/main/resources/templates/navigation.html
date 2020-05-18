@@ -23,6 +23,18 @@
                 </button>
                 <a class="navbar-brand" href="/code">刷题</a>
             </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">校园周边</span>
+                </button>
+                <a class="navbar-brand" href="/campus">校园周边</a>
+            </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">资源共享</span>
+                </button>
+                <a class="navbar-brand" href="/share">资源共享</a>
+            </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left">
@@ -39,11 +51,11 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/publish">讨论区</a></li>
-                            <li><a href="/recommendation">课程推荐</a></li>
-                            <li><a href="/solution">Coding</a></li>
-                            <li><a href="/record">校园周边</a></li>
-                            <li><a href="/sharing">资源共享</a></li>
+                            <li><a href="/publish?area=discuss" >讨论区</a></li>
+                            <li><a href="/publish?area=recommendation" >课程推荐</a></li>
+                            <li><a href="/publish?area=solution" >Coding</a></li>
+                            <li><a href="/publish?area=record" >校园周边</a></li>
+                            <li><a href="/publish?area=sharing" >资源共享</a></li>
                         </ul>
                     </li>
                     <li><a href="/profile/replies">通知<span class="badge" th:text="${session.unReadCount}"></span></a></li>
