@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>学习生活交流论坛</title>
+    <title th:text="${recommendation.title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
@@ -17,43 +17,87 @@
 </head>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
-<!--推荐课程详情页-->
+<!--讨论区问题详情页-->
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <!--正文-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
+                <h4><span th:text="${recommendation.title}"></span></h4>
+                <span class="text-desc" style="font-size: 12px;font-weight: normal;color: #999">
+                作者：<span th:text="${recommendation.user.name}"></span>|
+                发布时间：<span th:text="${#dates.format(recommendation.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>|
+                阅读数：<span th:text="${recommendation.viewCount}"></span>
+                </span>
                 <hr>
                 <!--问题内容-->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="question-view">
-                    <textarea style="display:none;">内容</textarea>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="recommend-view">
+                    <textarea style="display:none;" th:text="${recommendation.description}"></textarea>
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        editormd.markdownToHTML("question-view",{});
+                        editormd.markdownToHTML("recommend-view",{});
                     });
                 </script>
                 <!--标签-->
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <span class="label label-info" style="margin-left: 10px; font-size: 15px">
+                    <span class="label label-info" th:each="tag : ${recommendation.tag.split(',|，')}"
+                          style="margin-left: 10px; font-size: 15px">
                         <span class="glyphicon glyphicon-tags"></span>
-                        <span class="label label-info">MOOC</span>
+                        <span class="label label-info" th:text="${tag}"></span>
                     </span>
                 </div>
 
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    编辑
+                    <a th:href="@{'/publish/'+${recommendation.id}}" style="color:#999;"
+                       th:if="${session.user != null && session.user.id == recommendation.creator}">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
+                    </a>
                 </div>
             </div>
             <br>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h4>回复</h4>
+                <h4><span th:text="${recommendation.commentCount}"></span>个回复</h4>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:each="comment : ${comments}">
+                    <!--回复-->
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object img-rounded" th:src="${comment.user.avatarUrl}"
+                                     style="height: 38px; width: 38px">
+                            </a>
+                        </div>
+                        <div class="media-body" th:id="${'comment-body-'+comment.id}">
+                            <h5 class="media-heading">
+                                <span th:text="${comment.user.name}"></span>
+                            </h5>
+                            <div th:text="${comment.content}"></div>
+                            <div class="menu">
+                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                                <span class="glyphicon glyphicon-comment" th:data-id="${comment.id}"
+                                      onclick="collapseComment(this)"></span>
+                                <span th:text="${comment.commentCount}"></span>
+                                <span class="pull-right" th:text="${#dates.format(comment.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span>
+                            </div>
 
+                            <!--二级评论-->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse"
+                                 th:id="${'comment-'+comment.id}">
+                                <div>
+                                    <input type="text" class="form-control" placeholder="评论一下"
+                                           th:id="${'input-'+comment.id}">
+                                    <button type="button" class="pull-right btn btn-success"
+                                            onclick="comment(this)" th:data-id="${comment.id}">评论</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                </div>
             </div>
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="comment_section">
@@ -62,13 +106,18 @@
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="media">
                     <div class="media-left">
-                        <a href="#"></a>
+                        <a href="#">
+                            <img class="media-object img-rounded" th:src="${recommendation.user.avatarUrl}"
+                                 style="height: 38px; width: 38px">
+                        </a>
                     </div>
                     <div class="media-body">
                         <h5 class="media-heading">
+                            <span th:text="${recommendation.user.name}"></span>
                         </h5>
                     </div>
                 </div>
+                <input type="hidden" id="question_id" th:value="${recommendation.id}">
                 <textarea class="form-control" rows="3" id="comment_content"></textarea>
                 <button type="button" class="btn btn-success pull-right" onclick="post()">回复</button>
             </div>
@@ -80,13 +129,13 @@
                 <div class="media">
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object img-circle" th:src="${question.user.avatarUrl}"
+                            <img class="media-object img-circle" th:src="${recommendation.user.avatarUrl}"
                                  style="height: 38px; width: 38px">
                         </a>
                     </div>
                     <div class="media-body">
                         <h5 class="media-heading">
-                            <span th:text="${question.user.name}"></span>
+                            <span th:text="${recommendation.user.name}"></span>
                         </h5>
                     </div>
                 </div>
@@ -100,7 +149,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4>相关问题</h4>
                 <ul style="list-style: none; font-size:13px; padding-left: 0; line-height: 20px">
-                    <li th:each="related : ${relateQuestion}">
+                    <li th:each="related : ${relateRecommend}">
                         <a th:href="@{'/question/'+${related.id}}" th:text="${related.title}"></a>
                     </li>
                 </ul>

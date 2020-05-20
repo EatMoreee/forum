@@ -25,7 +25,7 @@
 
             <form action="/publish" method="post" >
                 <input type="hidden" name="id" th:value="${id}">
-                <input type="hidden" id="plate" name="plate" th:value="${session}">
+                <input type="hidden" name="area" th:value="${area}">
                 <div class="form-group">
                     <label for="title">标题:</label>
                     <input type="text" class="form-control" th:value="${title}" id="title" name = "title"

@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.Model.Question;
+import com.example.demo.Model.Recommend;
 import com.example.demo.Model.User;
 import com.example.demo.cache.*;
 import com.example.demo.dto.PaginationDTO;
 import com.example.demo.dto.QuestionDTO;
 import com.example.demo.service.QuestionService;
+import com.example.demo.service.RecommendationService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,49 +23,52 @@ public class PublishController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private RecommendationService recommendationService;
+
     @GetMapping("/publish")
     public String publish(Model model, @RequestParam(name = "area", defaultValue = "discuss") String area) {
         if ("discuss".equals(area)) {
             model.addAttribute("tags", TagCache.get());
-            model.addAttribute("session", "discuss");
+            model.addAttribute("area", "discuss");
             model.addAttribute("sessionName", "讨论区提问");
         }
         if ("recommendation".equals(area)) {
             model.addAttribute("tags", RecommendationTagCache.get());
-            model.addAttribute("session", "recommendation");
+            model.addAttribute("area", "recommendation");
             model.addAttribute("sessionName", "课程推荐");
         }
         if ("solution".equals(area)) {
             model.addAttribute("tags", SolutionTagCache.get());
-            model.addAttribute("session", "solution");
+            model.addAttribute("area", "solution");
             model.addAttribute("sessionName", "发表题解");
         }
         if ("record".equals(area)) {
             model.addAttribute("tags", RecordTagCache.get());
-            model.addAttribute("session", "record");
+            model.addAttribute("area", "record");
             model.addAttribute("sessionName", "校园周边分享");
         }
         if ("sharing".equals(area)){
             model.addAttribute("tags", SharingTagCache.get());
-            model.addAttribute("session", "sharing");
+            model.addAttribute("area", "sharing");
             model.addAttribute("sessionName", "资源分享");
         }
         return "publish";
     }
 
     @PostMapping("/publish")
-    public String doPublish(@RequestParam(value = "plate",required = false) String plate,
-                            @RequestParam(value = "title",required = false) String title,
+    public String doPublish(@RequestParam(value = "title",required = false) String title,
                             @RequestParam(value = "description",required = false) String description,
                             @RequestParam(value = "tag", required = false) String tag,
                             @RequestParam(value = "id", required = false) Long id,
+                            @RequestParam(value = "area",required = false) String area,
                             HttpServletRequest request,
                             Model model) {
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
         model.addAttribute("tags", TagCache.get());
-        model.addAttribute("session",plate);
+        model.addAttribute("session",area);
         model.addAttribute("sessionName", "发起");
         if (title == null || title == "") {
             model.addAttribute("error", "标题不能为空");
@@ -87,7 +92,7 @@ public class PublishController {
             model.addAttribute("error","用户未登录");
             return "publish";
         }
-        if("discuss".equals(plate)) {
+        if("discuss".equals(area)) {
             Question question = new Question();
             question.setTitle(title);
             question.setDescription(description);
@@ -96,14 +101,24 @@ public class PublishController {
             question.setId(id);
             questionService.createOrUpdate(question);
         }
-        else {
-            Question question = new Question();
-            question.setTitle(title);
-            question.setDescription(description);
-            question.setTag(tag);
-            question.setCreator(user.getId());
-            question.setId(id);
-            questionService.createOrUpdate(question);
+        else if("recommendation".equals(area)){
+            Recommend recommend = new Recommend();
+            recommend.setTitle(title);
+            recommend.setDescription(description);
+            recommend.setTag(tag);
+            recommend.setCreator(user.getId());
+            recommend.setId(id);
+            recommendationService.createOrUpdate(recommend);
+            return "redirect:/recommend";
+        }
+        else if("solution".equals(area)) {
+
+        }
+        else if("record".equals(area)) {
+
+        }
+        else if("sharing".equals(area)) {
+
         }
         return "redirect:/";
     }

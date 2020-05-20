@@ -1,7 +1,6 @@
 package com.example.demo.mapper;
 
 import com.example.demo.Model.Question;
-import com.example.demo.dto.QuestionDTO;
 
 import java.util.List;
 
