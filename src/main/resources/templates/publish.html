@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>发布-学习交流论坛</title>
+    <title>发布-学习生活交流论坛</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
@@ -45,7 +45,10 @@
                             path: "/js/lib/",
                             delay: 0,
                             watch: false,
-                            placeholder: "请输入描述"
+                            placeholder: "请输入描述",
+                            imageUpload: true,
+                            imageFormats: ["jpg","jpeg","gif","png","bmp","webp"],
+                            imageUploadURL: "/file/upload"
                         });
                     });
                 </script>
