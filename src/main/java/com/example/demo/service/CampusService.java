@@ -120,4 +120,15 @@ public class CampusService {
         campus.setViewCount(1L);
         campusExMapper.incView(campus);
     }
+
+    public List<Campus> HotList() {
+        CampusExample campusExample = new CampusExample();
+        campusExample.setOrderByClause("view_count desc");
+        List<Campus> campuses = campusMapper.selectByExample(campusExample);
+        List<Campus> campusList = new ArrayList<>();
+        for(int i = 0; i < campuses.size() && i < 10; ++i) {
+            campusList.add(campuses.get(i));
+        }
+        return campusList;
+    }
 }

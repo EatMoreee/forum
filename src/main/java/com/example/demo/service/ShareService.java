@@ -119,4 +119,15 @@ public class ShareService {
         share.setViewCount(1L);
         shareExMapper.incView(share);
     }
+
+    public List<Share> HotList() {
+        ShareExample shareExample = new ShareExample();
+        shareExample.setOrderByClause("view_count desc");
+        List<Share> shares = shareMapper.selectByExample(shareExample);
+        List<Share> shareList = new ArrayList<>();
+        for(int i = 0; i < shares.size() && i < 10; ++i) {
+            shareList.add(shares.get(i));
+        }
+        return shareList;
+    }
 }

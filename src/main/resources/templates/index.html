@@ -77,6 +77,11 @@
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h3>热门话题</h3>
+            <ul style="list-style: none; font-size:13px; padding-left: 0; line-height: 20px">
+                <li th:each="hot : ${hots}">
+                    <a th:href="@{'/question/'+${hot.id}}" th:text="${hot.title}"></a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

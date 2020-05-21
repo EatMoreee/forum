@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.Model.CodeSolve;
+import com.example.demo.Model.Recommend;
 import com.example.demo.dto.PaginationDTO;
 import com.example.demo.dto.RecommendationDTO;
 import com.example.demo.service.RecommendationService;
@@ -22,7 +24,9 @@ public class RecommendController {
                             @RequestParam(name="page", defaultValue = "1") Integer page,
                             @RequestParam(name="size", defaultValue = "5") Integer size) {
         PaginationDTO pagination = recommendationService.list(page, size);
+        List<Recommend> hots = recommendationService.HotList();
         model.addAttribute("pagination",pagination);
+        model.addAttribute("hots", hots);
         return "recommend";
     }
 

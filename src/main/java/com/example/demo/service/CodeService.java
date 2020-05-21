@@ -117,4 +117,15 @@ public class CodeService {
             }
         }
     }
+
+    public List<CodeSolve> HotList() {
+        CodeSolveExample codeSolveExample = new CodeSolveExample();
+        codeSolveExample.setOrderByClause("view_count desc");
+        List<CodeSolve> codeSolves = codeSolveMapper.selectByExample(codeSolveExample);
+        List<CodeSolve> codeSolveList = new ArrayList<>();
+        for(int i = 0; i < codeSolves.size() && i < 10; ++i) {
+            codeSolveList.add(codeSolves.get(i));
+        }
+        return codeSolveList;
+    }
 }

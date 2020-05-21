@@ -121,4 +121,15 @@ public class RecommendationService {
             }
         }
     }
+
+    public List<Recommend> HotList() {
+        RecommendExample recommendExample = new RecommendExample();
+        recommendExample.setOrderByClause("view_count desc");
+        List<Recommend> recommends = recommendMapper.selectByExample(recommendExample);
+        List<Recommend> recommendList = new ArrayList<>();
+        for(int i = 0; i < recommends.size() && i < 10; ++i) {
+            recommendList.add(recommends.get(i));
+        }
+        return recommendList;
+    }
 }

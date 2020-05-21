@@ -153,4 +153,15 @@ public class QuestionService {
         }).collect(Collectors.toList());
         return questionDTOS;
     }
+
+    public List<Question> HotList() {
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.setOrderByClause("view_count desc");
+        List<Question> questions = questionMapper.selectByExample(questionExample);
+        List<Question> questionList = new ArrayList<>();
+        for(int i = 0; i < questions.size() && i < 10; ++i) {
+            questionList.add(questions.get(i));
+        }
+        return questionList;
+    }
 }
