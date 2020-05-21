@@ -1,2 +1,2 @@
 # forum
-learning life exchange forum
+ \#forum 只有讨论区可以进行评论，其他板块只允许查看 
