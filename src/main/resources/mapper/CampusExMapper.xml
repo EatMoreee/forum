@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CampusExMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.Model.Campus">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="tag" jdbcType="VARCHAR" property="tag" />
+        <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate" />
+        <result column="like_count" jdbcType="BIGINT" property="likeCount" />
+        <result column="view_count" jdbcType="BIGINT" property="viewCount" />
+        <result column="comment_count" jdbcType="BIGINT" property="commentCount" />
+        <result column="creator" jdbcType="BIGINT" property="creator" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.Model.Campus">
+        <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    </resultMap>
+    <update id="incView" parameterType="com.example.demo.Model.Campus">
+        update campus
+        set view_count = view_count + #{viewCount,jdbcType=INTEGER}
+        where id = #{id}
+    </update>
+
+
+    <select id="selectRelate" parameterType="com.example.demo.Model.Campus" resultMap="BaseResultMap">
+        select * from campus where id != #{id} and tag regexp #{tag}
+    </select>
+</mapper>

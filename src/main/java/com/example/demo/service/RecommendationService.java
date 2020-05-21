@@ -62,7 +62,7 @@ public class RecommendationService {
         Recommend recommend = recommendMapper.selectByPrimaryKey(id);
 
         if (recommend == null) {
-            throw  new CustomizeException(CustomizeErrorCode.Question_Not_Found);
+            throw  new CustomizeException(CustomizeErrorCode.RECOMMENDATION_NOT_FOUND);
         }
         RecommendationDTO recommendationDTO = new RecommendationDTO();
         User user = userMapper.selectByPrimaryKey(recommend.getCreator());

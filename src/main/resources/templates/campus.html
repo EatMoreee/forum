@@ -19,14 +19,62 @@
 </script>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
-<!--校园周边页面-->
+<!--首页讨论区-->
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2><span class="glyphicon glyphicon-list" aria-hidden="true" style="height: 38px; width: 38px"></span>校园周边</h2>
-            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <hr>
+            <div class="media" th:each="campus: ${pagination.data}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-rounded"
+                             th:src="${campus.user.avatarUrl}"
+                             alt="这是一张标识图" style="width: 38px;height: 38px">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a th:href="@{'/campus/' + ${campus.id}}" th:text="${campus.title}"></a>
+                    </h4>
+                    <span style="font-size: 12px;font-weight: normal;color: #999">
+                        <span th:text="${campus.viewCount}"></span>次浏览 ·
+                        <span th:text="${#dates.format(campus.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                    </span>
+                </div>
+            </div>
 
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li th:if="${pagination.showFirstPage}">
+                        <a href="/?page=1" aria-label="Previous">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showPrevious}">
+                        <a th:href="@{/(page=${pagination.page -1})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page:${pagination.pages}" th:class="${pagination.page == page}? 'active':''">
+                        <a th:href="@{/(page=${page})}" th:text="${page}">
+
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showNext}">
+                        <a th:href="@{/(page=${pagination.page+1})}" aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showEndPage}">
+                        <a th:href="@{/(page=${pagination.totalPage})}" aria-label="Next">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
+
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h3>热门话题</h3>
         </div>

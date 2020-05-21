@@ -9,8 +9,11 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode{
     COMMENT_NOT_FOUND(2006,"你找的评论不在了"),
     COMMENT_IS_EMPTY(2007, "输入内容不能为空"),
     READ_NOTIFICATION_FAILED(2008, "你无权访问该信息"),
-    NOTIFICATION_NOT_FOUND(2009, "消息不存在"),
-    RECOMMENDATION_NOT_FOUND(2010,"推荐不存在");
+    NOTIFICATION_NOT_FOUND(2009, "您找的消息不存在"),
+    RECOMMENDATION_NOT_FOUND(2010,"您找的推荐不存在"),
+    SOLUTION_NOT_FOUND(2011,"您找的题解不存在"),
+    RECORD_NOT_FOUND(2012,"您找的校园周边分享不存在"),
+    SHARE_NOT_FOUND(2013, "你找的资源不存在");
 
 
     @Override

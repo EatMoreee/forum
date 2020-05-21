@@ -30,7 +30,6 @@
         </javaClientGenerator>
 
         <table tableName="codesolve" domainObjectName="CodeSolve"></table>
-        <table tableName="recommend" domainObjectName="Recommend"></table>
-        <table tableName="share" domainObjectName="Share"></table>
+        <table tableName="campus" domainObjectName="Campus"></table>
     </context>
 </generatorConfiguration>

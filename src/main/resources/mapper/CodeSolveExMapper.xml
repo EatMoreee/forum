@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CodeSolveExMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.Model.CodeSolve">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="create_time" jdbcType="BIGINT" property="createTime" />
+        <result column="view_count" jdbcType="BIGINT" property="viewCount" />
+        <result column="like_count" jdbcType="BIGINT" property="likeCount" />
+        <result column="tag" jdbcType="VARCHAR" property="tag" />
+        <result column="creator" jdbcType="BIGINT" property="creator" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.Model.CodeSolve">
+        <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    </resultMap>
+    <update id="incView" parameterType="com.example.demo.Model.CodeSolve">
+        update codesolve
+        set view_count = view_count + #{viewCount,jdbcType=INTEGER}
+        where id = #{id}
+    </update>
+
+
+    <select id="selectRelate" parameterType="com.example.demo.Model.CodeSolve" resultMap="BaseResultMap">
+        select * from codesolve where id != #{id} and tag regexp #{tag}
+    </select>
+</mapper>

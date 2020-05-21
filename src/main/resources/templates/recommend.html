@@ -38,7 +38,6 @@
                         <a th:href="@{'/recommend/' + ${recommend.id}}" th:text="${recommend.title}"></a>
                     </h4>
                     <span style="font-size: 12px;font-weight: normal;color: #999">
-                        <span th:text="${recommend.commentCount}"></span>个回复 ·
                         <span th:text="${recommend.viewCount}"></span>次浏览 ·
                         <span th:text="${#dates.format(recommend.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
                     </span>

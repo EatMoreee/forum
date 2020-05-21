@@ -1,13 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.Model.Question;
-import com.example.demo.Model.Recommend;
-import com.example.demo.Model.User;
+import com.example.demo.Model.*;
 import com.example.demo.cache.*;
 import com.example.demo.dto.PaginationDTO;
 import com.example.demo.dto.QuestionDTO;
-import com.example.demo.service.QuestionService;
-import com.example.demo.service.RecommendationService;
+import com.example.demo.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,15 @@ public class PublishController {
 
     @Autowired
     private RecommendationService recommendationService;
+
+    @Autowired
+    private CodeService codeService;
+
+    @Autowired
+    private CampusService campusService;
+
+    @Autowired
+    private ShareService shareService;
 
     @GetMapping("/publish")
     public String publish(Model model, @RequestParam(name = "area", defaultValue = "discuss") String area) {
@@ -82,11 +88,11 @@ public class PublishController {
             model.addAttribute("error", "标签不能为空");
             return "publish";
         }
-        String isValid = TagCache.filterIsValid(tag);
+        /*String isValid = TagCache.filterIsValid(tag);
         if (StringUtils.isNotBlank(isValid)) {
             model.addAttribute("error", "输入非法标签"+isValid);
             return "publish";
-        }
+        }*/
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             model.addAttribute("error","用户未登录");
@@ -112,13 +118,34 @@ public class PublishController {
             return "redirect:/recommend";
         }
         else if("solution".equals(area)) {
-
+            CodeSolve codeSolve = new CodeSolve();
+            codeSolve.setTitle(title);
+            codeSolve.setDescription(description);
+            codeSolve.setTag(tag);
+            codeSolve.setCreator(user.getId());
+            codeSolve.setId(id);
+            codeService.createOrUpdate(codeSolve);
+            return "redirect:/code";
         }
         else if("record".equals(area)) {
-
+            Campus campus = new Campus();
+            campus.setTitle(title);
+            campus.setDescription(description);
+            campus.setTag(tag);
+            campus.setCreator(user.getId());
+            campus.setId(id);
+            campusService.createOrUpdate(campus);
+            return "redirect:/campus";
         }
         else if("sharing".equals(area)) {
-
+            Share share = new Share();
+            share.setTitle(title);
+            share.setDescription(description);
+            share.setTag(tag);
+            share.setCreator(user.getId());
+            share.setId(id);
+            shareService.createOrUpdate(share);
+            return "redirect:/share";
         }
         return "redirect:/";
     }

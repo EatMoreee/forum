@@ -12,8 +12,8 @@ public class RecordTagCache {
     public static List<TagDTO> get() {
         List<TagDTO> tagDTOS = new ArrayList<>();
         TagDTO program = new TagDTO();
-        program.setCategoryName("开发语言");
-        program.setTags(Arrays.asList("Javascript","php", "css", "html", "html5","java","node.js","python","c++","c","golang","objective-c","typescript","shell","swift","c#","sass","ruby","bash","less","asp.net","perl"));
+        program.setCategoryName("美食");
+        program.setTags(Arrays.asList("火锅","干锅", "粤菜", "湘菜", "小龙虾"));
         tagDTOS.add(program);
 
         TagDTO framework = new TagDTO();
