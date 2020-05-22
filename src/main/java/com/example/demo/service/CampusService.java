@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.Model.*;
 import com.example.demo.dto.CampusDTO;
 import com.example.demo.dto.CodeSolveDTO;
+import com.example.demo.dto.JqueryDTO;
 import com.example.demo.dto.PaginationDTO;
 import com.example.demo.exception.CustomizeErrorCode;
 import com.example.demo.exception.CustomizeException;
@@ -31,8 +32,15 @@ public class CampusService {
     @Autowired
     private CampusExMapper campusExMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
-        Integer totalCount = (int) campusMapper.countByExample(new CampusExample());
+    public PaginationDTO list(String search, Integer page, Integer size) {
+        if(StringUtils.isNotBlank(search)) {
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
+
+        JqueryDTO jqueryDTO = new JqueryDTO();
+        jqueryDTO.setSearch(search);
+        Integer totalCount = (int) campusExMapper.countBySearch(jqueryDTO);
         Integer PageNum;
         if(totalCount % size == 0) PageNum = totalCount / size;
         else PageNum = totalCount / size + 1;
@@ -40,9 +48,9 @@ public class CampusService {
         if(page < 1) page = 1;
 
         Integer offset = (page - 1) * size;
-        CampusExample campusExample = new CampusExample();
-        campusExample.setOrderByClause("gmt_create desc");
-        List<Campus> campuses = campusMapper.selectByExampleWithRowbounds(campusExample,new RowBounds(offset,size));
+        jqueryDTO.setPage(offset);
+        jqueryDTO.setSize(size);
+        List<Campus> campuses = campusExMapper.selectBySearch(jqueryDTO);
         List<CampusDTO> campusDTOS = new ArrayList<>();
 
         PaginationDTO<CampusDTO> paginationDTO = new PaginationDTO<>();
@@ -128,6 +136,25 @@ public class CampusService {
         List<Campus> campusList = new ArrayList<>();
         for(int i = 0; i < campuses.size() && i < 10; ++i) {
             campusList.add(campuses.get(i));
+        }
+        return campusList;
+    }
+
+    public List<Campus> searchKey(String search) {
+        CampusExample campusExample = new CampusExample();
+        campusExample.setOrderByClause("view_count desc");
+        List<Campus> campuses = campusMapper.selectByExample(campusExample);
+        List<Campus> campusList = new ArrayList<>();
+        for(Campus campus : campuses) {
+            if(campus.getTitle().indexOf(search) != -1) {
+                campusList.add(campus);
+            }
+            else if (campus.getDescription().indexOf(search) != -1) {
+                campusList.add(campus);
+            }
+            else if (campus.getTag().indexOf(search) != -1) {
+                campusList.add(campus);
+            }
         }
         return campusList;
     }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserExMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.Model.User">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="account_id" jdbcType="VARCHAR" property="accountId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="token" jdbcType="CHAR" property="token" />
+        <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate" />
+        <result column="gmt_modified" jdbcType="BIGINT" property="gmtModified" />
+        <result column="bio" jdbcType="VARCHAR" property="bio" />
+        <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+        <result column="grade" jdbcType="INTEGER" property="grade" />
+        <result column="empirical_value" jdbcType="BIGINT" property="empiricalValue" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.Model.User">
+        <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    </resultMap>
+    <update id="incGrade" parameterType="com.example.demo.Model.User">
+        update user
+        set grade = #{grade, jdbcType=INTEGER}, empirical_value = #{empiricalValue,jdbcType=INTEGER}
+        where id = #{id}
+    </update>
+
+</mapper>

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.Model.*;
+import com.example.demo.dto.JqueryDTO;
 import com.example.demo.dto.PaginationDTO;
 import com.example.demo.dto.ShareDTO;
 import com.example.demo.exception.CustomizeErrorCode;
@@ -30,8 +31,15 @@ public class ShareService {
     @Autowired
     private ShareExMapper shareExMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
-        Integer totalCount = (int) shareMapper.countByExample(new ShareExample());
+    public PaginationDTO list(String search, Integer page, Integer size) {
+        if(StringUtils.isNotBlank(search)) {
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
+
+        JqueryDTO jqueryDTO = new JqueryDTO();
+        jqueryDTO.setSearch(search);
+        Integer totalCount = (int) shareExMapper.countBySearch(jqueryDTO);
         Integer PageNum;
         if(totalCount % size == 0) PageNum = totalCount / size;
         else PageNum = totalCount / size + 1;
@@ -39,9 +47,9 @@ public class ShareService {
         if(page < 1) page = 1;
 
         Integer offset = (page - 1) * size;
-        ShareExample shareExample = new ShareExample();
-        shareExample.setOrderByClause("gmt_create desc");
-        List<Share> shares = shareMapper.selectByExampleWithRowbounds(shareExample,new RowBounds(offset,size));
+        jqueryDTO.setPage(offset);
+        jqueryDTO.setSize(size);
+        List<Share> shares = shareExMapper.selectBySearch(jqueryDTO);
         List<ShareDTO> shareDTOS = new ArrayList<>();
 
         PaginationDTO<ShareDTO> paginationDTO = new PaginationDTO<>();
@@ -127,6 +135,25 @@ public class ShareService {
         List<Share> shareList = new ArrayList<>();
         for(int i = 0; i < shares.size() && i < 10; ++i) {
             shareList.add(shares.get(i));
+        }
+        return shareList;
+    }
+
+    public List<Share> searchKey(String search) {
+        ShareExample shareExample = new ShareExample();
+        shareExample.setOrderByClause("view_count desc");
+        List<Share> shares = shareMapper.selectByExample(shareExample);
+        List<Share> shareList = new ArrayList<>();
+        for(Share share : shares) {
+            if(share.getTitle().indexOf(search) != -1) {
+                shareList.add(share);
+            }
+            else if (share.getDescription().indexOf(search) != -1) {
+                shareList.add(share);
+            }
+            else if (share.getTag().indexOf(search) != -1) {
+                shareList.add(share);
+            }
         }
         return shareList;
     }

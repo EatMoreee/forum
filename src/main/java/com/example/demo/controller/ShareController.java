@@ -17,10 +17,11 @@ public class ShareController {
     private ShareService shareService;
 
     @GetMapping("/share")
-    public String index(@RequestParam(name="page", defaultValue = "1") Integer page,
+    public String index(@RequestParam(name = "search", required = false) String search,
+                        @RequestParam(name="page", defaultValue = "1") Integer page,
                         @RequestParam(name="size", defaultValue = "5") Integer size,
                         Model model) {
-        PaginationDTO pagination = shareService.list(page, size);
+        PaginationDTO pagination = shareService.list(search, page, size);
         List<Share> hots = shareService.HotList();
         model.addAttribute("pagination",pagination);
         model.addAttribute("hots", hots);

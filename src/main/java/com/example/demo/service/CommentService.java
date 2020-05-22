@@ -71,9 +71,9 @@ public class CommentService {
             if (question == null) {
                 throw new CustomizeException(CustomizeErrorCode.Question_Not_Found);
             }
+            comment.setCommentCount(0L);
             commentMapper.insert(comment);
             question.setCommentCount(1L);
-            System.out.println(question.getId());
             questionExMapper.incComment(question);
             //创建通知
             createNotify(comment, question.getCreator(), user.getName(), question.getTitle(), NotificationTypeEnum.REPLY_QUESTION.getType(),question.getId());

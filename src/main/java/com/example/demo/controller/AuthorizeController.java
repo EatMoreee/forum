@@ -3,11 +3,13 @@ package com.example.demo.controller;
 import com.example.demo.Model.User;
 import com.example.demo.dto.AccessTokenDTO;
 import com.example.demo.dto.GithubUser;
+import com.example.demo.exception.CustomizeErrorCode;
 import com.example.demo.provider.GithubProvider;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -69,4 +71,5 @@ public class AuthorizeController {
         response.addCookie(cookie);
         return "redirect:/";
     }
+
 }

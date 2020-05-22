@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.Model.Question;
 import com.example.demo.Model.QuestionExample;
 import com.example.demo.Model.User;
+import com.example.demo.dto.JqueryDTO;
 import com.example.demo.dto.PaginationDTO;
 import com.example.demo.dto.QuestionDTO;
 import com.example.demo.exception.CustomizeErrorCode;
@@ -33,8 +34,15 @@ public class QuestionService {
     @Autowired(required = false)
     private QuestionExMapper questionExMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
-        Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
+    public PaginationDTO list(String search, Integer page, Integer size) {
+        if(StringUtils.isNotBlank(search)) {
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
+
+        JqueryDTO jqueryDTO = new JqueryDTO();
+        jqueryDTO.setSearch(search);
+        Integer totalCount = (int) questionExMapper.countBySearch(jqueryDTO);
         Integer PageNum;
         if(totalCount % size == 0) PageNum = totalCount / size;
         else PageNum = totalCount / size + 1;
@@ -42,9 +50,9 @@ public class QuestionService {
         if(page < 1) page = 1;
 
         Integer offset = (page - 1) * size;
-        QuestionExample questionExample = new QuestionExample();
-        questionExample.setOrderByClause("gmt_create desc");
-        List<Question> questions = questionMapper.selectByExampleWithBLOBsWithRowbounds(questionExample,new RowBounds(offset,size));
+        jqueryDTO.setPage(offset);
+        jqueryDTO.setSize(size);
+        List<Question> questions = questionExMapper.selectBySearch(jqueryDTO);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
@@ -161,6 +169,25 @@ public class QuestionService {
         List<Question> questionList = new ArrayList<>();
         for(int i = 0; i < questions.size() && i < 10; ++i) {
             questionList.add(questions.get(i));
+        }
+        return questionList;
+    }
+
+    public List<Question> searchKey(String search) {
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.setOrderByClause("view_count desc");
+        List<Question> questions = questionMapper.selectByExample(questionExample);
+        List<Question> questionList = new ArrayList<>();
+        for(Question question : questions) {
+            if(question.getTitle().indexOf(search) != -1) {
+                questionList.add(question);
+            }
+            else if (question.getDescription().indexOf(search) != -1) {
+                questionList.add(question);
+            }
+            else if (question.getTag().indexOf(search) != -1) {
+                questionList.add(question);
+            }
         }
         return questionList;
     }

@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class PublishController {
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private QuestionService questionService;
@@ -74,7 +76,7 @@ public class PublishController {
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
         model.addAttribute("tags", TagCache.get());
-        model.addAttribute("session",area);
+        model.addAttribute("area",area);
         model.addAttribute("sessionName", "发起");
         if (title == null || title == "") {
             model.addAttribute("error", "标题不能为空");
@@ -98,6 +100,7 @@ public class PublishController {
             model.addAttribute("error","用户未登录");
             return "publish";
         }
+        userService.addGrade(1, user.getId());
         if("discuss".equals(area)) {
             Question question = new Question();
             question.setTitle(title);
@@ -158,7 +161,7 @@ public class PublishController {
         model.addAttribute("tag",question.getTag());
         model.addAttribute("id",question.getId());
         model.addAttribute("tags",TagCache.get());
-        model.addAttribute("session","discuss");
+        model.addAttribute("area","discuss");
         model.addAttribute("sessionName", "讨论区");
         return "publish";
     }

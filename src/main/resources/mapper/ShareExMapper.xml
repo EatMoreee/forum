@@ -21,8 +21,26 @@
         where id = #{id}
     </update>
 
-
     <select id="selectRelate" parameterType="com.example.demo.Model.Share" resultMap="BaseResultMap">
         select * from share where id != #{id} and tag regexp #{tag}
+    </select>
+
+    <select id="countBySearch" parameterType="com.example.demo.dto.JqueryDTO" resultType="java.lang.Integer">
+        select count(*) from share
+        <where>
+            <if test="search != null">
+                and title regexp #{search}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBySearch" parameterType="com.example.demo.dto.JqueryDTO" resultMap="BaseResultMap">
+        select * from share
+        <where>
+            <if test="search != null">
+                and title regexp #{search}
+            </if>
+        </where>
+        order by gmt_create desc limit #{page}, #{size}
     </select>
 </mapper>

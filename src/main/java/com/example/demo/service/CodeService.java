@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.Model.*;
 import com.example.demo.dto.CodeSolveDTO;
+import com.example.demo.dto.JqueryDTO;
 import com.example.demo.dto.PaginationDTO;
 import com.example.demo.exception.CustomizeErrorCode;
 import com.example.demo.exception.CustomizeException;
@@ -30,8 +31,15 @@ public class CodeService {
     @Autowired
     private CodeSolveExMapper codeSolveExMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
-        Integer totalCount = (int) codeSolveMapper.countByExample(new CodeSolveExample());
+    public PaginationDTO list(String search, Integer page, Integer size) {
+        if(StringUtils.isNotBlank(search)) {
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
+
+        JqueryDTO jqueryDTO = new JqueryDTO();
+        jqueryDTO.setSearch(search);
+        Integer totalCount = (int) codeSolveExMapper.countBySearch(jqueryDTO);
         Integer PageNum;
         if(totalCount % size == 0) PageNum = totalCount / size;
         else PageNum = totalCount / size + 1;
@@ -39,9 +47,9 @@ public class CodeService {
         if(page < 1) page = 1;
 
         Integer offset = (page - 1) * size;
-        CodeSolveExample codeSolveExample = new CodeSolveExample();
-        codeSolveExample.setOrderByClause("create_time desc");
-        List<CodeSolve> codes = codeSolveMapper.selectByExampleWithRowbounds(codeSolveExample,new RowBounds(offset,size));
+        jqueryDTO.setPage(offset);
+        jqueryDTO.setSize(size);
+        List<CodeSolve> codes = codeSolveExMapper.selectBySearch(jqueryDTO);
         List<CodeSolveDTO> codeSolveDTOS = new ArrayList<>();
 
         PaginationDTO<CodeSolveDTO> paginationDTO = new PaginationDTO<>();
@@ -125,6 +133,26 @@ public class CodeService {
         List<CodeSolve> codeSolveList = new ArrayList<>();
         for(int i = 0; i < codeSolves.size() && i < 10; ++i) {
             codeSolveList.add(codeSolves.get(i));
+        }
+        return codeSolveList;
+    }
+
+
+    public List<CodeSolve> searchKey(String search) {
+        CodeSolveExample codeSolveExample = new CodeSolveExample();
+        codeSolveExample.setOrderByClause("view_count desc");
+        List<CodeSolve> codeSolves = codeSolveMapper.selectByExample(codeSolveExample);
+        List<CodeSolve> codeSolveList = new ArrayList<>();
+        for(CodeSolve codeSolve : codeSolves) {
+            if(codeSolve.getTitle().indexOf(search) != -1) {
+                codeSolveList.add(codeSolve);
+            }
+            else if (codeSolve.getDescription().indexOf(search) != -1) {
+                codeSolveList.add(codeSolve);
+            }
+            else if (codeSolve.getTag().indexOf(search) != -1) {
+                codeSolveList.add(codeSolve);
+            }
         }
         return codeSolveList;
     }

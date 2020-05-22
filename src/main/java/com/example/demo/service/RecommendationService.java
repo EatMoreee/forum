@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.Model.*;
+import com.example.demo.dto.JqueryDTO;
 import com.example.demo.dto.PaginationDTO;
 import com.example.demo.dto.RecommendationDTO;
 import com.example.demo.exception.CustomizeErrorCode;
@@ -30,8 +31,15 @@ public class RecommendationService {
     @Autowired
     private RecommendExMapper recommendExMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
-        Integer totalCount = (int) recommendMapper.countByExample(new RecommendExample());
+    public PaginationDTO list(String search, Integer page, Integer size) {
+        if(StringUtils.isNotBlank(search)) {
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
+
+        JqueryDTO jqueryDTO = new JqueryDTO();
+        jqueryDTO.setSearch(search);
+        Integer totalCount = (int) recommendExMapper.countBySearch(jqueryDTO);
         Integer PageNum;
         if(totalCount % size == 0) PageNum = totalCount / size;
         else PageNum = totalCount / size + 1;
@@ -39,9 +47,9 @@ public class RecommendationService {
         if(page < 1) page = 1;
 
         Integer offset = (page - 1) * size;
-        RecommendExample recommendExample = new RecommendExample();
-        recommendExample.setOrderByClause("gmt_create desc");
-        List<Recommend> recommends = recommendMapper.selectByExampleWithRowbounds(recommendExample,new RowBounds(offset,size));
+        jqueryDTO.setPage(offset);
+        jqueryDTO.setSize(size);
+        List<Recommend> recommends = recommendExMapper.selectBySearch(jqueryDTO);
         List<RecommendationDTO> recommendationDTOS = new ArrayList<>();
 
         PaginationDTO<RecommendationDTO> paginationDTO = new PaginationDTO<>();
@@ -129,6 +137,25 @@ public class RecommendationService {
         List<Recommend> recommendList = new ArrayList<>();
         for(int i = 0; i < recommends.size() && i < 10; ++i) {
             recommendList.add(recommends.get(i));
+        }
+        return recommendList;
+    }
+
+    public List<Recommend> searchKey(String search) {
+        RecommendExample recommendExample = new RecommendExample();
+        recommendExample.setOrderByClause("view_count desc");
+        List<Recommend> recommends = recommendMapper.selectByExample(recommendExample);
+        List<Recommend> recommendList = new ArrayList<>();
+        for(Recommend recommend : recommends) {
+            if(recommend.getTitle().indexOf(search) != -1) {
+                recommendList.add(recommend);
+            }
+            else if (recommend.getDescription().indexOf(search) != -1) {
+                recommendList.add(recommend);
+            }
+            else if (recommend.getTag().indexOf(search) != -1) {
+                recommendList.add(recommend);
+            }
         }
         return recommendList;
     }
