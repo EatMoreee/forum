@@ -29,7 +29,9 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="codesolve" domainObjectName="CodeSolve"></table>
         <table tableName="campus" domainObjectName="Campus"></table>
+        <table tableName="question" domainObjectName="Question"></table>
+        <table tableName="recommend" domainObjectName="Recommend"></table>
+        <table tableName="share" domainObjectName="Share"></table>
     </context>
 </generatorConfiguration>

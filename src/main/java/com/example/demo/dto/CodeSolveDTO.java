@@ -13,6 +13,7 @@ public class CodeSolveDTO {
     private Long viewCount;
     private Long likeCount;
     private Long creator;
+    private Integer limitation;
     private User user;
 }
 

@@ -15,5 +15,6 @@ public class QuestionDTO {
     private long commentCount;
     private long viewCount;
     private long likeCount;
+    private Integer limitation;
     private User user;
 }

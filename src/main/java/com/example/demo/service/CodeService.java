@@ -163,4 +163,8 @@ public class CodeService {
         codeSolve.setLikeCount(1L);
         codeSolveExMapper.incLike(codeSolve);
     }
+
+    public void deleteById(Long id) {
+        codeSolveMapper.deleteByPrimaryKey(id);
+    }
 }

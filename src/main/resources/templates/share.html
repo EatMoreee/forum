@@ -3,10 +3,11 @@
 <head>
     <title>学习生活交流论坛</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/Administrators.js" type="application/javascript"></script>
 </head>
 <script>
     window.onload = function () {
@@ -113,8 +114,10 @@
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <a th:if="${session.user != null}" th:href="@{'/share/' + ${share.id}}" th:text="${share.title}"></a>
-                        <span th:if="${session.user == null}" th:text="${share.title}"></span>
+                        <a th:if="${session.user != null && session.user.grade >= share.limitation}" th:href="@{'/share/' + ${share.id}}" th:text="${share.title}"></a>
+                        <span th:if="${session.user == null || session.user.grade < share.limitation}" th:text="${share.title}"></span>
+                        <a th:if="${session.user.id == 1}">|<span class="glyphicon glyphicon-trash" th:data-id="${share.id}"
+                                                                   onclick="deleteShare(this)"></span></a>
                     </h4>
                     <span style="font-size: 12px;font-weight: normal;color: #999">
                         <span th:text="${share.viewCount}"></span>次浏览 ·

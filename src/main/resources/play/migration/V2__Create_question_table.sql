@@ -11,6 +11,7 @@ create table question
     creator       bigint           null,
     comment_count bigint default 0 not null,
     view_count    bigint default 0 not null,
-    like_count    bigint default 0 not null
+    like_count    bigint default 0 not null,
+    limitation    int    default 0 not null
 );
 

@@ -17,7 +17,7 @@ public class UserService {
     @Autowired
     private UserExMapper userExMapper;
 
-    public void createOrUpdate(User user) {
+    public int createOrUpdate(User user) {
         UserExample userExample = new UserExample();
         userExample.createCriteria()
                 .andAccountIdEqualTo(user.getAccountId());
@@ -27,6 +27,7 @@ public class UserService {
             user.setGmtModified(user.getGmtCreate());
             user.setEmpiricalValue(100L);
             userMapper.insert(user);
+            return 1;
         }
         else {
             User dbuser = users.get(0);
@@ -35,10 +36,11 @@ public class UserService {
             updateUser.setName(user.getName());
             updateUser.setAvatarUrl(user.getAvatarUrl());
             updateUser.setToken(user.getToken());
-            updateUser.setEmpiricalValue(dbuser.getEmpiricalValue() + 20L);
+            updateUser.setEmpiricalValue(dbuser.getEmpiricalValue() + 10L);
             UserExample example = new UserExample();
             example.createCriteria().andIdEqualTo(dbuser.getId());
             userMapper.updateByExampleSelective(updateUser,example);
+            return 2;
         }
     }
 
@@ -79,6 +81,11 @@ public class UserService {
             user.setGrade(grade);
             user.setEmpiricalValue(value);
         }
+        if (user.getGrade() > 29) {
+            user.setGrade(30);
+            user.setEmpiricalValue(999L);
+        }
         userExMapper.incGrade(user);
     }
+
 }

@@ -30,6 +30,9 @@
                     <label for="title">标题:</label>
                     <input type="text" class="form-control" th:value="${title}" id="title" name = "title"
                            placeholder="标题" autocomplete="off">
+                    <label for="limit">权限:</label>
+                    <input type="text" class="form-control" th:value="${limit}" id="limit" name="limit"
+                        placeholder="设置阅读权限">
                 </div>
                 <div class="form-group" id="question-editor">
                     <label for="description">内容:</label>
@@ -82,9 +85,10 @@
             </form>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3>问题发起指南</h3>
-            ·问题标题：请用精简的语言描述您发布的问题，不超过25个字<br>
-            ·问题补充：详细补充您的问题，并确保问题描述清晰直观，并提供相应的一些资料；<br>
+            <h3>发起指南</h3>
+            ·标题：请用精简的语言描述您发布的帖子，不超过25个字<br>
+            `权限:可选择设置权限，权限系数小于等于您当前的等级<br>
+            ·内容：详细补充您的发帖，并确保描述清晰直观<br>
             ·选择标签：选择一个或多个合适的标签<br>
         </div>
     </div>

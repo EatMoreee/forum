@@ -11,6 +11,7 @@
         <result column="view_count" jdbcType="BIGINT" property="viewCount" />
         <result column="like_count" jdbcType="BIGINT" property="likeCount" />
         <result column="comment_count" jdbcType="BIGINT" property="commentCount" />
+        <result column="limitation" jdbcType="INTEGER" property="limitation" />
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.Model.Recommend">
         <result column="description" jdbcType="LONGVARCHAR" property="description" />

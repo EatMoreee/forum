@@ -9,6 +9,7 @@
         <result column="like_count" jdbcType="BIGINT" property="likeCount" />
         <result column="tag" jdbcType="VARCHAR" property="tag" />
         <result column="creator" jdbcType="BIGINT" property="creator" />
+        <result column="limitation" jdbcType="INTEGER" property="limitation" />
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.Model.CodeSolve">
         <result column="description" jdbcType="LONGVARCHAR" property="description" />

@@ -164,4 +164,8 @@ public class ShareService {
         share.setLikeCount(1L);
         shareExMapper.incLike(share);
     }
+
+    public void deleteById(Long id) {
+        shareMapper.deleteByPrimaryKey(id);
+    }
 }

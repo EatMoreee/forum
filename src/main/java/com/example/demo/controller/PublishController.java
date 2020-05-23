@@ -61,6 +61,8 @@ public class PublishController {
             model.addAttribute("area", "sharing");
             model.addAttribute("sessionName", "资源分享");
         }
+        Integer limit = 0;
+        model.addAttribute("limit", limit);
         return "publish";
     }
 
@@ -70,6 +72,7 @@ public class PublishController {
                             @RequestParam(value = "tag", required = false) String tag,
                             @RequestParam(value = "id", required = false) Long id,
                             @RequestParam(value = "area",required = false) String area,
+                            @RequestParam(value = "limit", required = false) Integer limit,
                             HttpServletRequest request,
                             Model model) {
         model.addAttribute("title",title);
@@ -77,6 +80,7 @@ public class PublishController {
         model.addAttribute("tag",tag);
         model.addAttribute("tags", TagCache.get());
         model.addAttribute("area",area);
+        model.addAttribute("limit", limit);
         model.addAttribute("sessionName", "发起");
         if (title == null || title == "") {
             model.addAttribute("error", "标题不能为空");
@@ -100,6 +104,10 @@ public class PublishController {
             model.addAttribute("error","用户未登录");
             return "publish";
         }
+        if (limit != null && limit > user.getGrade()) {
+            model.addAttribute("error","权限设置超过您当前等级");
+            return "publish";
+        }
         userService.addGrade(1, user.getId());
         if("discuss".equals(area)) {
             Question question = new Question();
@@ -108,6 +116,7 @@ public class PublishController {
             question.setTag(tag);
             question.setCreator(user.getId());
             question.setId(id);
+            question.setLimitation(limit);
             questionService.createOrUpdate(question);
         }
         else if("recommendation".equals(area)){
@@ -117,6 +126,7 @@ public class PublishController {
             recommend.setTag(tag);
             recommend.setCreator(user.getId());
             recommend.setId(id);
+            recommend.setLimitation(limit);
             recommendationService.createOrUpdate(recommend);
             return "redirect:/recommend";
         }
@@ -127,6 +137,7 @@ public class PublishController {
             codeSolve.setTag(tag);
             codeSolve.setCreator(user.getId());
             codeSolve.setId(id);
+            codeSolve.setLimitation(limit);
             codeService.createOrUpdate(codeSolve);
             return "redirect:/code";
         }
@@ -137,6 +148,7 @@ public class PublishController {
             campus.setTag(tag);
             campus.setCreator(user.getId());
             campus.setId(id);
+            campus.setLimitation(limit);
             campusService.createOrUpdate(campus);
             return "redirect:/campus";
         }
@@ -147,6 +159,7 @@ public class PublishController {
             share.setTag(tag);
             share.setCreator(user.getId());
             share.setId(id);
+            share.setLimitation(limit);
             shareService.createOrUpdate(share);
             return "redirect:/share";
         }
@@ -161,6 +174,7 @@ public class PublishController {
         model.addAttribute("tag",question.getTag());
         model.addAttribute("id",question.getId());
         model.addAttribute("tags",TagCache.get());
+        model.addAttribute("limit", question.getLimitation());
         model.addAttribute("area","discuss");
         model.addAttribute("sessionName", "讨论区");
         return "publish";

@@ -165,4 +165,8 @@ public class CampusService {
         campus.setLikeCount(1L);
         campusExMapper.incLike(campus);
     }
+
+    public void deleteById(Long id) {
+        campusMapper.deleteByPrimaryKey(id);
+    }
 }

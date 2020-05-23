@@ -13,6 +13,7 @@ public class CampusDTO {
     private Long viewCount;
     private Long commentCount;
     private Long creator;
+    private Integer limitation;
     private String description;
     private User user;
 }

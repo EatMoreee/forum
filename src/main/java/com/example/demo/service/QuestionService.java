@@ -198,4 +198,8 @@ public class QuestionService {
         question.setLikeCount(1L);
         questionExMapper.incLike(question);
     }
+
+    public void deleteById(Long id) {
+        questionMapper.deleteByPrimaryKey(id);
+    }
 }

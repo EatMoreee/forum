@@ -11,6 +11,7 @@
         <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
         <result column="view_count" jdbcType="INTEGER" property="viewCount" />
         <result column="like_count" jdbcType="INTEGER" property="likeCount" />
+        <result column="limitation" jdbcType="INTEGER" property="limitation" />
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.Model.Question">
         <result column="description" jdbcType="LONGVARCHAR" property="description" />

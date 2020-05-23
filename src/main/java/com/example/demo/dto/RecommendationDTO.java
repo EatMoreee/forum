@@ -15,5 +15,6 @@ public class RecommendationDTO {
     private Long commentCount;
     private Long viewCount;
     private Long likeCount;
+    private Integer limitation;
     private User user;
 }

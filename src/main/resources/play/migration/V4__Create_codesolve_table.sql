@@ -8,6 +8,7 @@ create table codesolve
     create_time bigint           null,
     view_count  bigint default 0 not null,
     like_count  bigint default 0 not null,
-    tag         varchar(512)     not null
+    tag         varchar(512)     not null,
+    limitation    int    default 0 not null
 );
 

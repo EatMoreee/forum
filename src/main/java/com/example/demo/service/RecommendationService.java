@@ -166,4 +166,8 @@ public class RecommendationService {
         recommend.setLikeCount(1L);
         recommendExMapper.incLike(recommend);
     }
+
+    public void deleteById(Long id) {
+        recommendMapper.selectByPrimaryKey(id);
+    }
 }
