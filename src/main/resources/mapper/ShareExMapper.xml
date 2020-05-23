@@ -21,6 +21,12 @@
         where id = #{id}
     </update>
 
+    <update id="incLike" parameterType="com.example.demo.Model.Share">
+        update share
+        set like_count = like_count + #{likeCount,jdbcType=INTEGER}
+        where id = #{id}
+    </update>
+
     <select id="selectRelate" parameterType="com.example.demo.Model.Share" resultMap="BaseResultMap">
         select * from share where id != #{id} and tag regexp #{tag}
     </select>

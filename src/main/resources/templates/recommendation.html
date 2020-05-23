@@ -27,7 +27,11 @@
                 <span class="text-desc" style="font-size: 12px;font-weight: normal;color: #999">
                 作者：<span th:text="${recommendation.user.name}"></span>|
                 发布时间：<span th:text="${#dates.format(recommendation.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>|
-                阅读数：<span th:text="${recommendation.viewCount}"></span>
+                阅读数：<span th:text="${recommendation.viewCount}"></span>|
+                点赞数：<a><span class="glyphicon glyphicon-thumbs-up" th:data-id="${recommendation.id}"
+                             onclick="incRecommendLike(this)"></span>
+                      </a>
+                <span th:text="${recommendation.likeCount}"></span>
                 </span>
                 <hr>
                 <!--问题内容-->

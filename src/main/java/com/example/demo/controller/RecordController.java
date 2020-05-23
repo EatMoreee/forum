@@ -20,9 +20,9 @@ public class RecordController {
 
     @GetMapping("/campus/{id}")
     public String record(@PathVariable(name = "id")Long id, Model model) {
+        campusService.incView(id);
         CampusDTO campusDTO = campusService.getById(id);
         List<CampusDTO> relateCampus = campusService.selectRelate(campusDTO);
-        campusService.incView(id);
         model.addAttribute("campus",campusDTO);
         model.addAttribute("relateCampus",relateCampus);
         return "record";

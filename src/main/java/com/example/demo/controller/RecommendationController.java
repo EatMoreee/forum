@@ -19,9 +19,9 @@ public class RecommendationController {
 
     @GetMapping("/recommend/{id}")
     public String recommendation(@PathVariable(name = "id") Long id, Model model) {
+        recommendationService.incView(id);
         RecommendationDTO recommendationDTO = recommendationService.getById(id);
         List<RecommendationDTO> relateRecommend = recommendationService.selectRelate(recommendationDTO);
-        recommendationService.incView(id);
         model.addAttribute("recommendation",recommendationDTO);
         model.addAttribute("relateRecommend",relateRecommend);
         return "recommendation";

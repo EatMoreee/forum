@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface QuestionExMapper {
     int incView(Question record);
+    int incLike(Question record);
     int incComment(Question record);
     int countBySearch(JqueryDTO record);
     List<Question> selectRelate(Question question);

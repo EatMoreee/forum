@@ -3,7 +3,68 @@ function post() {
     var content = $("#comment_content").val();
     commentTarget(questionId, 1, content);
 }
+function comment(e) {
+    var commentId = e.getAttribute("data-id");
+    var content = $("#input-"+commentId).val();
+    commentTarget(commentId,2, content);
+}
 
+function incQuestionLike(e) {
+    var targetId = e.getAttribute("data-id");
+    incLike(1, targetId);
+}
+function incRecommendLike(e) {
+    var targetId = e.getAttribute("data-id");
+    incLike(2, targetId);
+}
+function incCodeLike(e) {
+    var targetId = e.getAttribute("data-id");
+    incLike(3, targetId);
+}
+function incCampusLike(e) {
+    var targetId = e.getAttribute("data-id");
+    incLike(4, targetId);
+}
+function incShareLike(e) {
+    var targetId = e.getAttribute("data-id");
+    incLike(5, targetId);
+}
+function incCommentLike(e) {
+    var targetId = e.getAttribute("data-id");
+    incLike(6, targetId);
+}
+function incLike(type,targetId) {
+    $.ajax({
+        type: "POST",
+        url: "/like",
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "id": targetId,
+            "type": type
+        }),
+        success: function (response) {
+            if (response.code == 200) {
+                $("#comment_section").hide();
+                window.location.reload();
+            }
+            else {
+                if (response.code == 2003) {
+                    var isAccept = confirm(response.message);
+                    if (isAccept) {
+                        window.open("https://github.com/login/oauth/authorize?client_id=8001a245cc2ff9985a75&redirect_uri=http://localhost:8080/callback&scope=user&state=1");
+                        window.localStorage.setItem("closable", true);
+                    }
+
+                }
+                else {
+                    alert(response.message);
+                }
+            }
+            console.log(response);
+        },
+        dataType: "json"
+    });
+}
 function commentTarget(targetId, type, content) {
     if (!content) {
         alert("不能回复空内容");
@@ -42,11 +103,6 @@ function commentTarget(targetId, type, content) {
     });
 }
 
-function comment(e) {
-    var commentId = e.getAttribute("data-id");
-    var content = $("#input-"+commentId).val();
-    commentTarget(commentId,2, content);
-}
 
 function collapseComment(e) {
     var id = e.getAttribute("data-id");
@@ -118,3 +174,4 @@ function selectTag(e) {
         }
     }
 }
+

@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ShareExMapper {
     int incView(Share record);
+    int incLike(Share record);
     List<Share> selectRelate(Share share);
     int countBySearch(JqueryDTO record);
     List<Share> selectBySearch(JqueryDTO record);

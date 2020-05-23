@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface CodeSolveExMapper {
     int incView(CodeSolve record);
+    int incLike(CodeSolve record);
     List<CodeSolve> selectRelate(CodeSolve codeSolve);
     int countBySearch(JqueryDTO record);
     List<CodeSolve> selectBySearch(JqueryDTO record);

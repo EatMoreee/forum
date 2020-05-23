@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class UserService {
-    @Autowired(required = false)
+    @Autowired
     private UserMapper userMapper;
 
     @Autowired
@@ -25,6 +25,7 @@ public class UserService {
         if (users.size() == 0) {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
+            user.setEmpiricalValue(100L);
             userMapper.insert(user);
         }
         else {
@@ -34,6 +35,7 @@ public class UserService {
             updateUser.setName(user.getName());
             updateUser.setAvatarUrl(user.getAvatarUrl());
             updateUser.setToken(user.getToken());
+            updateUser.setEmpiricalValue(dbuser.getEmpiricalValue() + 20L);
             UserExample example = new UserExample();
             example.createCriteria().andIdEqualTo(dbuser.getId());
             userMapper.updateByExampleSelective(updateUser,example);
@@ -45,6 +47,7 @@ public class UserService {
         user.setId(id);
         User dbUser = userMapper.selectByPrimaryKey(id);
         if (i == 1) {
+            //发帖
             int grade = dbUser.getGrade();
             Long value = dbUser.getEmpiricalValue() + 20;
             if(value >= 1000) {
@@ -55,8 +58,20 @@ public class UserService {
             user.setEmpiricalValue(value);
         }
         else if (i == 2) {
+            //评论
             int grade = dbUser.getGrade();
-            Long value = dbUser.getEmpiricalValue() + 1;
+            Long value = dbUser.getEmpiricalValue() + 3;
+            if(value >= 1000) {
+                grade = grade + 1;
+                value = value % 1000;
+            }
+            user.setGrade(grade);
+            user.setEmpiricalValue(value);
+        }
+        else if (i == 3) {
+            //点赞
+            int grade = dbUser.getGrade();
+            Long value = dbUser.getEmpiricalValue() + 2;
             if(value >= 1000) {
                 grade = grade + 1;
                 value = value % 1000;

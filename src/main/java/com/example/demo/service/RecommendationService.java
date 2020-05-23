@@ -159,4 +159,11 @@ public class RecommendationService {
         }
         return recommendList;
     }
+
+    public void incLike(Long id) {
+        Recommend recommend = new Recommend();
+        recommend.setId(id);
+        recommend.setLikeCount(1L);
+        recommendExMapper.incLike(recommend);
+    }
 }

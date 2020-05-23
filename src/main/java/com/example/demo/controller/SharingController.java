@@ -20,9 +20,9 @@ public class SharingController {
 
     @GetMapping("/share/{id}")
     public String publish(@PathVariable(name = "id") Long id, Model model) {
+        shareService.incView(id);
         ShareDTO shareDTO = shareService.getById(id);
         List<ShareDTO> relateShare = shareService.selectRelate(shareDTO);
-        shareService.incView(id);
         model.addAttribute("share",shareDTO);
         model.addAttribute("relateShare",relateShare);
         return "sharing";

@@ -156,4 +156,11 @@ public class CodeService {
         }
         return codeSolveList;
     }
+
+    public void incLike(Long id) {
+        CodeSolve codeSolve = new CodeSolve();
+        codeSolve.setId(id);
+        codeSolve.setLikeCount(1L);
+        codeSolveExMapper.incLike(codeSolve);
+    }
 }

@@ -20,9 +20,9 @@ public class SolutionController {
 
     @GetMapping("/code/{id}")
     public String solution(@PathVariable(name = "id")Long id, Model model) {
+        codeService.incView(id);
         CodeSolveDTO codeSolveDTO = codeService.getById(id);
         List<CodeSolveDTO> relateCode = codeService.selectRelate(codeSolveDTO);
-        codeService.incView(id);
         model.addAttribute("solution",codeSolveDTO);
         model.addAttribute("relateCode",relateCode);
         return "solution";

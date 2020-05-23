@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface RecommendExMapper {
     int incView(Recommend record);
+    int incLike(Recommend record);
     int incComment(Recommend record);
     List<Recommend> selectRelate(Recommend recommend);
     int countBySearch(JqueryDTO record);

@@ -158,4 +158,11 @@ public class CampusService {
         }
         return campusList;
     }
+
+    public void incLike(Long id) {
+        Campus campus = new Campus();
+        campus.setId(id);
+        campus.setLikeCount(1L);
+        campusExMapper.incLike(campus);
+    }
 }

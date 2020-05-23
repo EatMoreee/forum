@@ -4,4 +4,5 @@ import com.example.demo.Model.Comment;
 
 public interface CommentExMapper {
     int incCommentCount(Comment comment);
+    int incLike(Comment comment);
 }

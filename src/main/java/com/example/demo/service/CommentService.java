@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.Model.*;
+import com.example.demo.dto.CampusDTO;
 import com.example.demo.dto.CommentDTO;
 import com.example.demo.enums.CommentTypeEnum;
 import com.example.demo.enums.NotificationTypeEnum;
@@ -123,5 +124,19 @@ public class CommentService {
         }).collect(Collectors.toList());
 
         return commentDTOS;
+    }
+
+    public Comment getById(Long id) {
+        Comment comment = commentMapper.selectByPrimaryKey(id);
+        if (comment == null) {
+            throw  new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
+        }
+        return comment;
+    }
+    public void incLike(Long id) {
+        Comment comment = new Comment();
+        comment.setId(id);
+        comment.setLikeCount(1L);
+        commentExMapper.incLike(comment);
     }
 }

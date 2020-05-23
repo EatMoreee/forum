@@ -191,4 +191,11 @@ public class QuestionService {
         }
         return questionList;
     }
+
+    public void incLike(Long id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setLikeCount(1L);
+        questionExMapper.incLike(question);
+    }
 }

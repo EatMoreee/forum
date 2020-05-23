@@ -21,6 +21,12 @@
         where id = #{id}
     </update>
 
+    <update id="incLike" parameterType="com.example.demo.Model.Recommend">
+        update recommend
+        set like_count = like_count + #{likeCount,jdbcType=INTEGER}
+        where id = #{id}
+    </update>
+
     <update id="incComment" parameterType="com.example.demo.Model.Recommend">
         update recommend
         set comment_count = comment_count + #{commentCount,jdbcType=INTEGER}

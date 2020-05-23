@@ -157,4 +157,11 @@ public class ShareService {
         }
         return shareList;
     }
+
+    public void incLike(Long id) {
+        Share share = new Share();
+        share.setId(id);
+        share.setLikeCount(1L);
+        shareExMapper.incLike(share);
+    }
 }
