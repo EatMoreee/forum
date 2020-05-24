@@ -116,7 +116,7 @@
                     <h4 class="media-heading">
                         <a th:if="${session.user != null && session.user.grade >= share.limitation}" th:href="@{'/share/' + ${share.id}}" th:text="${share.title}"></a>
                         <span th:if="${session.user == null || session.user.grade < share.limitation}" th:text="${share.title}"></span>
-                        <a th:if="${session.user.id == 1}">|<span class="glyphicon glyphicon-trash" th:data-id="${share.id}"
+                        <a th:if="${session.user != null && session.user.id == 1}">|<span class="glyphicon glyphicon-trash" th:data-id="${share.id}"
                                                                    onclick="deleteShare(this)"></span></a>
                     </h4>
                     <span style="font-size: 12px;font-weight: normal;color: #999">

@@ -31,7 +31,7 @@
                 点赞数：<a><span class="glyphicon glyphicon-thumbs-up" th:data-id="${share.id}"
                              onclick="incShareLike(this)"></span>
                       </a>
-                <span th:text="${share.likeCount}"></span>
+                <span th:text="${share.likeCount}" id="shareLike"></span>
                 </span>
                 <hr>
                 <!--问题内容-->

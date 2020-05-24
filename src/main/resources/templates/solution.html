@@ -31,7 +31,7 @@
                 点赞数：<a><span class="glyphicon glyphicon-thumbs-up" th:data-id="${solution.id}"
                              onclick="incCodeLike(this)"></span>
                       </a>
-                <span th:text="${solution.likeCount}"></span>
+                <span th:text="${solution.likeCount}" id = "codeLike"></span>
                 </span>
                 <hr>
                 <!--问题内容-->

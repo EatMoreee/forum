@@ -116,7 +116,7 @@
                     <h4 class="media-heading">
                         <a th:if="${session.user != null && session.user.grade >= recommend.limitation}" th:href="@{'/recommend/' + ${recommend.id}}" th:text="${recommend.title}"></a>
                         <span th:if="${session.user == null || session.user.grade < recommend.limitation}" th:text="${recommend.title}"></span>
-                        <a th:if="${session.user.id == 1}">|<span class="glyphicon glyphicon-trash" th:data-id="${recommend.id}"
+                        <a th:if="${session.user != null && session.user.id == 1}">|<span class="glyphicon glyphicon-trash" th:data-id="${recommend.id}"
                                                                    onclick="deleteRecommend(this)"></span></a>
                     </h4>
                     <span style="font-size: 12px;font-weight: normal;color: #999">

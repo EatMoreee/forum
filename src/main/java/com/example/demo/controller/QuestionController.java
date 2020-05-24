@@ -29,6 +29,7 @@ public class QuestionController {
         List<QuestionDTO> relateQuestion = questionService.selectRelate(questionDTO);
         List<CommentDTO> comments = commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
         model.addAttribute("question",questionDTO);
+        model.addAttribute("likeCount", questionDTO.getLikeCount());
         model.addAttribute("comments", comments);
         model.addAttribute("relateQuestion",relateQuestion);
         return "question";

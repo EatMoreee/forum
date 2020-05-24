@@ -116,7 +116,7 @@
                     <h4 class="media-heading">
                         <a th:if="${session.user != null && session.user.grade >= question.limitation}" th:href="@{'/question/' + ${question.id}}" th:text="${question.title}"></a>
                         <span th:if="${session.user == null || session.user.grade < question.limitation}" th:text="${question.title}"></span>
-                        <a th:if="${session.user.id == 1}">|<span class="glyphicon glyphicon-trash" th:data-id="${question.id}"
+                        <a th:if="${session.user != null && session.user.id == 1}">|<span class="glyphicon glyphicon-trash" th:data-id="${question.id}"
                             onclick="deleteQuestion(this)"></span></a>
                     </h4>
                     <span style="font-size: 12px;font-weight: normal;color: #999">

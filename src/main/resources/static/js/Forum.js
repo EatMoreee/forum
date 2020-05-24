@@ -10,26 +10,44 @@ function comment(e) {
 }
 
 function incQuestionLike(e) {
+    var x=document.getElementById("likeCount").innerHTML;
+    x=parseInt(x)+1;
+    document.getElementById("likeCount").innerHTML=x;
     var targetId = e.getAttribute("data-id");
     incLike(1, targetId);
 }
 function incRecommendLike(e) {
+    var x=document.getElementById("recommendLike").innerHTML;
+    x=parseInt(x)+1;
+    document.getElementById("recommendLike").innerHTML=x;
     var targetId = e.getAttribute("data-id");
     incLike(2, targetId);
 }
 function incCodeLike(e) {
+    var x=document.getElementById("codeLike").innerHTML;
+    x=parseInt(x)+1;
+    document.getElementById("codeLike").innerHTML=x;
     var targetId = e.getAttribute("data-id");
     incLike(3, targetId);
 }
 function incCampusLike(e) {
+    var x=document.getElementById("campusLike").innerHTML;
+    x=parseInt(x)+1;
+    document.getElementById("campusLike").innerHTML=x;
     var targetId = e.getAttribute("data-id");
     incLike(4, targetId);
 }
 function incShareLike(e) {
+    var x=document.getElementById("shareLike").innerHTML;
+    x=parseInt(x)+1;
+    document.getElementById("shareLike").innerHTML=x;
     var targetId = e.getAttribute("data-id");
     incLike(5, targetId);
 }
 function incCommentLike(e) {
+    var x=document.getElementById("commentLike").innerHTML;
+    x=parseInt(x)+1;
+    document.getElementById("commentLike").innerHTML=x;
     var targetId = e.getAttribute("data-id");
     incLike(6, targetId);
 }
@@ -45,7 +63,6 @@ function incLike(type,targetId) {
         success: function (response) {
             if (response.code == 200) {
                 $("#comment_section").hide();
-                window.location.reload();
             }
             else {
                 if (response.code == 2003) {

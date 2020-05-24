@@ -31,7 +31,7 @@
                 点赞数：<a><span class="glyphicon glyphicon-thumbs-up" th:data-id="${recommendation.id}"
                              onclick="incRecommendLike(this)"></span>
                       </a>
-                <span th:text="${recommendation.likeCount}"></span>
+                <span th:text="${recommendation.likeCount}" id="recommendLike"></span>
                 </span>
                 <hr>
                 <!--问题内容-->

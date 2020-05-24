@@ -116,7 +116,7 @@
                     <h4 class="media-heading">
                         <a th:if="${session.user != null && session.user.grade >= campus.limitation}" th:href="@{'/campus/' + ${campus.id}}" th:text="${campus.title}"></a>
                         <span th:if="${session.user == null || session.user.grade < campus.limitation}" th:text="${campus.title}"></span>
-                        <a th:if="${session.user.id == 1}">|<span class="glyphicon glyphicon-trash" th:data-id="${campus.id}"
+                        <a th:if="${session.user != null && session.user.id == 1}">|<span class="glyphicon glyphicon-trash" th:data-id="${campus.id}"
                                                                    onclick="deleteCampus(this)"></span></a>
                     </h4>
                     <span style="font-size: 12px;font-weight: normal;color: #999">

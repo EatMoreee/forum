@@ -116,7 +116,7 @@
                     <h4 class="media-heading">
                         <a th:if="${session.user != null && session.user.grade >= code.limitation}" th:href="@{'/code/' + ${code.id}}" th:text="${code.title}"></a>
                         <span th:if="${session.user == null || session.user.grade < code.limitation}" th:text="${code.title}"></span>
-                        <a th:if="${session.user.id == 1}">|<span class="glyphicon glyphicon-trash" th:data-id="${code.id}"
+                        <a th:if="${session.user != null && session.user.id == 1}">|<span class="glyphicon glyphicon-trash" th:data-id="${code.id}"
                                                                    onclick="deleteCode(this)"></span></a>
                     </h4>
                     <span style="font-size: 12px;font-weight: normal;color: #999">

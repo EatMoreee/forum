@@ -31,7 +31,7 @@
                 点赞数：<a><span class="glyphicon glyphicon-thumbs-up" th:data-id="${question.id}"
                              onclick="incQuestionLike(this)"></span>
                       </a>
-                <span th:text="${question.likeCount}"></span>
+                <span th:text="${likeCount}" id="likeCount" name="likeCount"></span>
                 </span>
                 <hr>
                 <!--问题内容-->
@@ -83,7 +83,7 @@
                             <div class="menu">
                                 <a><span class="glyphicon glyphicon-thumbs-up" th:data-id="${comment.id}"
                                     onclick="incCommentLike(this)"></span></a>
-                                <span th:text="${comment.likeCount}"></span>
+                                <span th:text="${comment.likeCount}" id="commentLike"></span>
                                 <a><span class="glyphicon glyphicon-comment" th:data-id="${comment.id}"
                                          onclick="collapseComment(this)"></span></a>
                                 <span th:text="${comment.commentCount}"></span>
