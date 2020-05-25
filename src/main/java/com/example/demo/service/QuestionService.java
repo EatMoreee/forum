@@ -81,6 +81,7 @@ public class QuestionService {
 
         Integer offset = (page - 1) * size;
         QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_create desc");
         example.createCriteria()
                 .andCreatorEqualTo(id);
         List<Question> questions = questionMapper.selectByExampleWithBLOBsWithRowbounds(example,new RowBounds(offset,size));

@@ -16,6 +16,14 @@
             <h2><span th:text="${sectionName}"></span></h2>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'questions'}">
+                <div class="container-fluid">
+                    <div><a class="navbar-brand" href="/profile/questions?area=question">讨论区</a></div>
+                    <div><a class="navbar-brand" href="/profile/questions?area=recommend">课程区</a></div>
+                    <div><a class="navbar-brand" href="/profile/questions?area=code">题解区</a></div>
+                    <div><a class="navbar-brand" href="/profile/questions?area=campus">校园区</a></div>
+                    <div><a class="navbar-brand" href="/profile/questions?area=share">资源区</a></div>
+                </div>
+                <input type="hidden" name="area" th:value="${area}">
                 <div class="media" th:each="question: ${pagination.data}">
                     <div class="media-left">
                         <a href="#">
@@ -25,15 +33,13 @@
                         </a>
                     </div>
                     <div class="media-body">
-                        <h4><a th:href="@{'/question/' + ${question.id}}" th:text="${question.title}"></a></h4>
+                        <span><a th:href="@{'/' + ${area} + '/' + ${question.id}}" th:text="${question.title}"></a></span>
                         <span style="font-size: 12px;font-weight: normal;color: #999">
-                        <span th:text="${question.commentCount}"></span>个回复 ·
                         <span th:text="${question.viewCount}"></span>次浏览 ·
-                        <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span> .
                         <a th:href="@{'/publish/'+${question.id}}" style="color:#999;"
-                           th:if="${session.user != null && session.user.id == question.creator}">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
-                    </a>
+                           th:if="${session.user != null && session.user.id == question.creator && area == 'question'}">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
+                        </a>
                     </span>
                     </div>
                 </div>

@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.Model.User;
+import com.example.demo.cache.*;
 import com.example.demo.dto.PaginationDTO;
-import com.example.demo.service.NotificationService;
-import com.example.demo.service.QuestionService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,19 +22,47 @@ public class ProfileController {
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private RecommendationService recommendationService;
+
+    @Autowired
+    private CodeService codeService;
+
+    @Autowired
+    private CampusService campusService;
+
+    @Autowired
+    private ShareService shareService;
 
     @GetMapping("/profile/{action}")
     public String profile(HttpServletRequest request,
-                          @PathVariable(name = "action") String action,
                           Model model,
+                          @PathVariable(name = "action") String action,
+                          @RequestParam(name = "area", defaultValue = "question") String area,
                           @RequestParam(name="page", defaultValue = "1") Integer page,
-                          @RequestParam(name="size", defaultValue = "5") Integer size) {
+                          @RequestParam(name="size", defaultValue = "6") Integer size) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) return "redirect:/";
         if ("questions".equals(action)) {
             model.addAttribute("section","questions");
             model.addAttribute("sectionName","我的提问");
-            PaginationDTO pagination = questionService.list(user.getId(), page, size);
+            PaginationDTO pagination = null;
+            if ("question".equals(area)) {
+                pagination = questionService.list(user.getId(), page, size);
+            }
+            if ("recommend".equals(area)) {
+                pagination = recommendationService.list(user.getId(), page, size);
+            }
+            if ("code".equals(area)) {
+                pagination = codeService.list(user.getId(), page, size);
+            }
+            if ("campus".equals(area)) {
+                pagination = campusService.list(user.getId(), page, size);
+            }
+            if ("share".equals(area)){
+                pagination = shareService.list(user.getId(), page, size);
+            }
+            model.addAttribute("area", area);
             model.addAttribute("pagination", pagination);
         }
         else if ("replies".equals(action)) {

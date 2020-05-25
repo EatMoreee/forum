@@ -65,6 +65,38 @@ public class ShareService {
         return paginationDTO;
     }
 
+    public PaginationDTO list(Long id, Integer page, Integer size) {
+        ShareExample shareExample = new ShareExample();
+        shareExample.createCriteria()
+                .andCreatorEqualTo(id);
+        Integer totalCount = (int) shareMapper.countByExample(shareExample);
+        Integer PageNum;
+        if(totalCount % size == 0) PageNum = totalCount / size;
+        else PageNum = totalCount / size + 1;
+        if(page > PageNum) page = PageNum;
+        if(page < 1) page = 1;
+
+        Integer offset = (page - 1) * size;
+        ShareExample example = new ShareExample();
+        example.setOrderByClause("gmt_create desc");
+        example.createCriteria()
+                .andCreatorEqualTo(id);
+        List<Share> shares = shareMapper.selectByExampleWithBLOBsWithRowbounds(example,new RowBounds(offset,size));
+        List<ShareDTO> shareDTOS = new ArrayList<>();
+
+        PaginationDTO<ShareDTO> paginationDTO = new PaginationDTO<>();
+        for (Share share : shares) {
+            User user = userMapper.selectByPrimaryKey(share.getCreator());
+            ShareDTO shareDTO = new ShareDTO();
+            BeanUtils.copyProperties(share, shareDTO);
+            shareDTO.setUser(user);
+            shareDTOS.add(shareDTO);
+        }
+        paginationDTO.setData(shareDTOS);
+        paginationDTO.setPagination(PageNum, page, size);
+        return paginationDTO;
+    }
+
     public void createOrUpdate(Share share) {
         if (share.getId() == null) {
             share.setGmtCreate(System.currentTimeMillis());

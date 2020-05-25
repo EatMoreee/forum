@@ -1,10 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.Model.*;
-import com.example.demo.dto.CampusDTO;
-import com.example.demo.dto.CodeSolveDTO;
-import com.example.demo.dto.JqueryDTO;
-import com.example.demo.dto.PaginationDTO;
+import com.example.demo.dto.*;
 import com.example.demo.exception.CustomizeErrorCode;
 import com.example.demo.exception.CustomizeException;
 import com.example.demo.mapper.CampusExMapper;
@@ -55,6 +52,38 @@ public class CampusService {
 
         PaginationDTO<CampusDTO> paginationDTO = new PaginationDTO<>();
         for (Campus campus: campuses) {
+            User user = userMapper.selectByPrimaryKey(campus.getCreator());
+            CampusDTO campusDTO = new CampusDTO();
+            BeanUtils.copyProperties(campus, campusDTO);
+            campusDTO.setUser(user);
+            campusDTOS.add(campusDTO);
+        }
+        paginationDTO.setData(campusDTOS);
+        paginationDTO.setPagination(PageNum, page, size);
+        return paginationDTO;
+    }
+
+    public PaginationDTO list(Long id, Integer page, Integer size) {
+        CampusExample campusExample = new CampusExample();
+        campusExample.createCriteria()
+                .andCreatorEqualTo(id);
+        Integer totalCount = (int) campusMapper.countByExample(campusExample);
+        Integer PageNum;
+        if(totalCount % size == 0) PageNum = totalCount / size;
+        else PageNum = totalCount / size + 1;
+        if(page > PageNum) page = PageNum;
+        if(page < 1) page = 1;
+
+        Integer offset = (page - 1) * size;
+        CampusExample example = new CampusExample();
+        example.setOrderByClause("gmt_create desc");
+        example.createCriteria()
+                .andCreatorEqualTo(id);
+        List<Campus> campuses = campusMapper.selectByExampleWithBLOBsWithRowbounds(example,new RowBounds(offset,size));
+        List<CampusDTO> campusDTOS = new ArrayList<>();
+
+        PaginationDTO<CampusDTO> paginationDTO = new PaginationDTO<>();
+        for (Campus campus : campuses) {
             User user = userMapper.selectByPrimaryKey(campus.getCreator());
             CampusDTO campusDTO = new CampusDTO();
             BeanUtils.copyProperties(campus, campusDTO);

@@ -29,4 +29,9 @@ public class IndexController {
         model.addAttribute("hots", hotQuestions);
         return "index";
     }
+
+    @GetMapping("/new")
+    public String New() {
+        return "new";
+    }
 }

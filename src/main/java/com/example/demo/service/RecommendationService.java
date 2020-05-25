@@ -65,10 +65,40 @@ public class RecommendationService {
         return paginationDTO;
     }
 
+    public PaginationDTO list(Long id, Integer page, Integer size) {
+        RecommendExample recommendExample = new RecommendExample();
+        recommendExample.createCriteria()
+                .andCreatorEqualTo(id);
+        Integer totalCount = (int) recommendMapper.countByExample(recommendExample);
+        Integer PageNum;
+        if(totalCount % size == 0) PageNum = totalCount / size;
+        else PageNum = totalCount / size + 1;
+        if(page > PageNum) page = PageNum;
+        if(page < 1) page = 1;
+
+        Integer offset = (page - 1) * size;
+        RecommendExample example = new RecommendExample();
+        example.setOrderByClause("gmt_create desc");
+        example.createCriteria()
+                .andCreatorEqualTo(id);
+        List<Recommend> recommends = recommendMapper.selectByExampleWithBLOBsWithRowbounds(example,new RowBounds(offset,size));
+        List<RecommendationDTO> recommendationDTOS = new ArrayList<>();
+
+        PaginationDTO<RecommendationDTO> paginationDTO = new PaginationDTO<>();
+        for (Recommend recommend: recommends) {
+            User user = userMapper.selectByPrimaryKey(recommend.getCreator());
+            RecommendationDTO recommendationDTO = new RecommendationDTO();
+            BeanUtils.copyProperties(recommend, recommendationDTO);
+            recommendationDTO.setUser(user);
+            recommendationDTOS.add(recommendationDTO);
+        }
+        paginationDTO.setData(recommendationDTOS);
+        paginationDTO.setPagination(PageNum, page, size);
+        return paginationDTO;
+    }
 
     public RecommendationDTO getById(Long id) {
         Recommend recommend = recommendMapper.selectByPrimaryKey(id);
-
         if (recommend == null) {
             throw  new CustomizeException(CustomizeErrorCode.RECOMMENDATION_NOT_FOUND);
         }
@@ -92,7 +122,7 @@ public class RecommendationService {
         List<Recommend> recommends = recommendExMapper.selectRelate(recommend);
         List<RecommendationDTO> recommendationDTOS = recommends.stream().map(q -> {
             RecommendationDTO recommendationDTO1 = new RecommendationDTO();
-            BeanUtils.copyProperties(q, recommendationDTO);
+            BeanUtils.copyProperties(q, recommendationDTO1);
             return recommendationDTO1;
         }).collect(Collectors.toList());
         return recommendationDTOS;
