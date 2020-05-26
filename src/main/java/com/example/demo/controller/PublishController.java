@@ -1,12 +1,11 @@
 package com.example.demo.controller;
 
+import com.aliyun.oss.OSSClient;
 import com.example.demo.Model.*;
+import com.example.demo.aliyun.OSSUtil;
 import com.example.demo.cache.*;
-import com.example.demo.dto.PaginationDTO;
 import com.example.demo.dto.QuestionDTO;
 import com.example.demo.service.*;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +32,9 @@ public class PublishController {
 
     @Autowired
     private ShareService shareService;
+
+    private OSSClient ossClient = OSSUtil.getOSSClient();
+    private String bucketName = "你的bucketName";
 
     @GetMapping("/publish")
     public String publish(Model model, @RequestParam(name = "area", defaultValue = "discuss") String area) {
