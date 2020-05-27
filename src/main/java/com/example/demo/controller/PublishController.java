@@ -5,13 +5,22 @@ import com.example.demo.Model.*;
 import com.example.demo.aliyun.OSSUtil;
 import com.example.demo.cache.*;
 import com.example.demo.dto.QuestionDTO;
+import com.example.demo.exception.FileException;
+import com.example.demo.exception.ImgException;
 import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
 
 @Controller
 public class PublishController {
@@ -32,6 +41,9 @@ public class PublishController {
 
     @Autowired
     private ShareService shareService;
+
+    @Autowired
+    private FileService fileService;
 
     private OSSClient ossClient = OSSUtil.getOSSClient();
     private String bucketName = "你的bucketName";
@@ -69,6 +81,7 @@ public class PublishController {
     }
 
     @PostMapping("/publish")
+    @RequestMapping("/publish")
     public String doPublish(@RequestParam(value = "title",required = false) String title,
                             @RequestParam(value = "description",required = false) String description,
                             @RequestParam(value = "tag", required = false) String tag,
@@ -155,6 +168,16 @@ public class PublishController {
             return "redirect:/campus";
         }
         else if("sharing".equals(area)) {
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+            MultipartFile file = multiRequest.getFile("upLoadFile");
+            String url = null;
+            if (file != null) {
+                try {
+                    url = fileService.upDateFile(file);
+                } catch (FileException e) {
+                    e.printStackTrace();
+                }
+            }
             Share share = new Share();
             share.setTitle(title);
             share.setDescription(description);
@@ -162,6 +185,7 @@ public class PublishController {
             share.setCreator(user.getId());
             share.setId(id);
             share.setLimitation(limit);
+            share.setFile(url);
             shareService.createOrUpdate(share);
             return "redirect:/share";
         }

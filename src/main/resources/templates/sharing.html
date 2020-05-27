@@ -51,6 +51,7 @@
                         <span class="glyphicon glyphicon-tags"></span>
                         <span class="label label-info" th:text="${tag}"></span>
                     </span>
+                    <a th:if="${share.file != null}" th:href="${share.file}"><button>资源下载</button></a>
                 </div>
             </div>
         </div>

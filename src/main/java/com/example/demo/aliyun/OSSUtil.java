@@ -3,12 +3,15 @@ package com.example.demo.aliyun;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.*;
 import com.aliyuncs.utils.StringUtils;
+import com.example.demo.exception.FileException;
 import com.example.demo.exception.ImgException;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -17,7 +20,7 @@ import java.util.Random;
 
 public class OSSUtil {
     public static final Logger logger = LoggerFactory.getLogger(OSSUtil.class);
-    private OSSClient ossClient = OSSUtil.getOSSClient();
+    private OSSClient ossclient = OSSUtil.getOSSClient();
     private String bucketName = "uploadxxw";
     private String filedir = "picture/";
     public String KEY;
@@ -48,23 +51,21 @@ public class OSSUtil {
         }
     }
 
-    public String getImgUrl(String fileUrl) {
-        System.out.println(fileUrl);
-        if (!StringUtils.isEmpty(fileUrl)) {
-            String[] split = fileUrl.split("/");
-            return this.getUrl(this.filedir + split[split.length - 1]);
+    public String uploadFile2Oss(MultipartFile file) throws FileException {
+        String originalFilename = file.getOriginalFilename();
+        String substring = originalFilename.substring(originalFilename.lastIndexOf(".")).toLowerCase();
+        Random random = new Random();
+        String name = random.nextInt(10000) + System.currentTimeMillis() + substring;
+        try {
+            ossclient.putObject(bucketName, filedir + name, file.getInputStream());
+            return name;
+        } catch (Exception e) {
+            throw new FileException("文件上传失败");
         }
-        return null;
     }
-    /**
-     * 上传到OSS服务器 如果同名文件会覆盖服务器上的
-     *
-     * @param instream
-     *            文件流
-     * @param fileName
-     *            文件名称 包括后缀名
-     * @return 出错返回"" ,唯一MD5数字签名
-     */
+
+
+
     public String uploadFile2OSS(InputStream instream, String fileName) {
         String ret = "";
         try {
@@ -78,7 +79,7 @@ public class OSSUtil {
 
             // 上传文件
 
-            PutObjectResult putResult = ossClient.putObject(bucketName, filedir + fileName, instream, objectMetadata);
+            PutObjectResult putResult = ossclient.putObject(bucketName, filedir + fileName, instream, objectMetadata);
             ret = putResult.getETag();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -94,6 +95,7 @@ public class OSSUtil {
         return ret;
     }
 
+
     /*
       Description: 判断OSS服务文件上传时文件的contentType
 
@@ -105,32 +107,46 @@ public class OSSUtil {
         if (filenameExtension.equalsIgnoreCase("bmp")) {
             return "image/bmp";
         }
-        if (filenameExtension.equalsIgnoreCase("gif")) {
+        else if (filenameExtension.equalsIgnoreCase("gif")) {
             return "image/gif";
         }
-        if (filenameExtension.equalsIgnoreCase("jpeg") || filenameExtension.equalsIgnoreCase("jpg")
+        else if (filenameExtension.equalsIgnoreCase("jpeg") || filenameExtension.equalsIgnoreCase("jpg")
                 || filenameExtension.equalsIgnoreCase("png")) {
             return "image/jpeg";
         }
-        if (filenameExtension.equalsIgnoreCase("html")) {
+        else if (filenameExtension.equalsIgnoreCase("html")) {
             return "text/html";
         }
-        if (filenameExtension.equalsIgnoreCase("txt")) {
+        else if (filenameExtension.equalsIgnoreCase("txt")) {
             return "text/plain";
         }
-        if (filenameExtension.equalsIgnoreCase("vsd")) {
+        else if (filenameExtension.equalsIgnoreCase("vsd")) {
             return "application/vnd.visio";
         }
-        if (filenameExtension.equalsIgnoreCase("pptx") || filenameExtension.equalsIgnoreCase("ppt")) {
+        else if (filenameExtension.equalsIgnoreCase("pptx") || filenameExtension.equalsIgnoreCase("ppt")) {
             return "application/vnd.ms-powerpoint";
         }
-        if (filenameExtension.equalsIgnoreCase("docx") || filenameExtension.equalsIgnoreCase("doc")) {
+        else if (filenameExtension.equalsIgnoreCase("docx") || filenameExtension.equalsIgnoreCase("doc")) {
             return "application/msword";
         }
-        if (filenameExtension.equalsIgnoreCase("xml")) {
+        else if (filenameExtension.equalsIgnoreCase("pdf")) {
+            return "application/mspdf";
+        }
+        else if (filenameExtension.equalsIgnoreCase("xml")) {
             return "text/xml";
         }
-        return "image/jpeg";
+        else if (filenameExtension.equalsIgnoreCase("mp4")) {
+            return "video/mp4";
+        }
+        else return "application/octet-stream";
+    }
+
+    public String getUploadUrl(String fileUrl) {
+        if (!StringUtils.isEmpty(fileUrl)) {
+            String[] split = fileUrl.split("/");
+            return this.getUrl(this.filedir + split[split.length - 1]);
+        }
+        return null;
     }
 
     /**
@@ -144,7 +160,7 @@ public class OSSUtil {
 
         Date expiration = new Date(System.currentTimeMillis() + 3600L * 1000 * 24 * 365 * 10);
         // 生成URL
-        URL url = ossClient.generatePresignedUrl(bucketName, key, expiration);
+        URL url = ossclient.generatePresignedUrl(bucketName, key, expiration);
         if (url != null) {
             return url.toString();
         }

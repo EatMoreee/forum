@@ -129,27 +129,27 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li th:if="${pagination.showFirstPage}">
-                        <a href="/?page=1" aria-label="Previous">
+                        <a href="/code?page=1" aria-label="Previous">
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showPrevious}">
-                        <a th:href="@{/(page=${pagination.page -1})}" aria-label="Previous">
+                        <a th:href="@{/code(page=${pagination.page -1})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li th:each="page:${pagination.pages}" th:class="${pagination.page == page}? 'active':''">
-                        <a th:href="@{/(page=${page})}" th:text="${page}">
+                        <a th:href="@{/code(page=${page})}" th:text="${page}">
 
                         </a>
                     </li>
                     <li th:if="${pagination.showNext}">
-                        <a th:href="@{/(page=${pagination.page+1})}" aria-label="Next">
+                        <a th:href="@{/code(page=${pagination.page+1})}" aria-label="Next">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showEndPage}">
-                        <a th:href="@{/(page=${pagination.totalPage})}" aria-label="Next">
+                        <a th:href="@{/code(page=${pagination.totalPage})}" aria-label="Next">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>
@@ -161,7 +161,7 @@
             <h3>热门话题</h3>
             <ul style="list-style: none; font-size:13px; padding-left: 0; line-height: 20px">
                 <li th:each="hot : ${hots}">
-                    <a th:href="@{'/question/'+${hot.id}}" th:text="${hot.title}"></a>
+                    <a th:href="@{'/code/'+${hot.id}}" th:text="${hot.title}"></a>
                 </li>
             </ul>
         </div>

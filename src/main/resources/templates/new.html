@@ -3,11 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <title>论坛-新手教程</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <style type="text/css">
+        div{
+            background-color: #F0F0F0;
+            border-radius: 20px;
+            width: 800px;
+            margin: auto;
+            margin-bottom: 50px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        tr{
+            height: 40px;
+        }
+        div[type='checkbox']{
+            height: 30px;
+            width: 100%;
+            font-size: 15px;
+            border-radius: 10px;
+            padding-left: 8px;
+            padding-right: 8px;
+            margin-top: 13px;
+            margin-bottom: 10px;
+        }
+        input:focus{
+            outline: none;
+        }
+        input[type][value]{
+            vertical-align: -4px;
+            height: 20px;
+            width: 20px;
+        }
+
+
+        form{
+            background-color: #F0F0F0;
+            border-radius: 20px;
+            margin: auto;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        @media (max-width: 880px){
+            div{
+                width:85%;
+            }
+        }
+
+        @media (min-width: 880px){
+            div{
+                width:800px;
+            }
+        }
+    </style>
+    <script>
+        function click(){
+            const box = document.getElementById('acceptBox');
+            if(box.checked){
+                window.location.href='/';
+            }else{
+                alert("请阅读并同意新手教程！");
+            }
+        }
+    </script>
 </head>
 <body>
-<h1>新手教程</h1>
-<p>...</p>
-<input type="checkbox">我已阅读并会遵守教程的要求
-<p><a class="btn btn-primary btn-lg" href="/" role="button">回到主页</a></p>
+<h1 style="text-align: center;">新手教程</h1>
+<div>
+    <p>欢迎来到学习生活论坛，本论坛旨在为用户提供学习生活的交流平台。为保障您的使用体验，请认真阅读以下教程。</br>
+
+    <h2>一、论坛概述</h2>
+    <p>论坛分为五个板块，分别为讨论区、课程推荐区、刷题板块、校园周边分享和资源共享板块。您可以快捷方便的获取信息，发帖、点赞、评论，结交志同道合的朋友，尽情遨游在知识的海洋。</p>
+
+    <h2>二、用户操作指南</h2>
+    <h3>1.用户登录</h3>
+    <p>已注册的用户点击登录按钮，并经过身份验证即可成功登录。</br>
+        未登录状态下。游客也可以访问网站，但是无法查看帖子详细信息。</p>
+    <h3>2.用户空间</h3>
+    <p>注册用户拥有自己的用户空间，在这里，您可以查看并设置自己的资料（如密码、头像等），并且可以查看自己发布过的帖子。</p>
+    <h3>3.搜索功能</h3>
+    <p>本论坛提供了强大的搜索功能，可以帮助用户寻找想要查看的帖子。</p>
+    <h3>4.等级制度</h3>
+    <p>用户每次登录、发帖、评论或是被点赞等，都会获得一定的经验。当积累到一定经验值之后，用户可以升级。并将获得更炫酷的等级标签与更高的权限。高级用户可以对帖子上信息的浏览内容进行权限设置。对于被设置浏览内容权限的帖子的信息，只有等级高于一定级别的用户才能够查看完整的帖子信息。</p>
+
+    <h2>三、板块概述</h2>
+    <h3>1.讨论区</h3>
+    <p>在讨论区，用户可以发布帖子、评论、点赞。</p>
+    <h3>2.课程推荐</h3>
+    <p>课程推荐板块中主要包含了各种公开课以及付费课程的介绍和推荐。用户可以对想要进行推荐的课程发布帖子，帖子中包含推荐理由。</p>
+    <h3>3.刷题板块</h3>
+    <p>刷题板块中，用户可以探讨某道题的解法，并且可以发布帖子来向大家分享自己的解法。</p>
+    <h3>4.校园周边</h3>
+    <p>校园周边板块中，用户可以发布帖子分享校园周边的信息（如吃、喝、玩、乐、学等）</p>
+    <h3>5.资源共享</h3>
+    <p>资源共享板块中，用户可以上传链接或文件，分享自己认为有价值的资源，也可以下载其他用户分享的资源。</p>
+
+    <h2>四、使用须知</h2>
+    <p>1.用户的发言内容不允许涉及人身攻击、散播虚假信息、违法违禁信息、泄露国家机密等。如有违反，管理员有权对发言者进行禁言警告，情节严重者，帐号将被注销。</br>
+        2.用户发言所引用的文字、图片、音视频等资料，如果侵犯了第三方的知识产权或其他权利，责任由作者或转载者本人承担，本论坛对此不承担责任。</br>
+        3.发帖前请认真核对板块功能，尽量不要发送与板块内容不符的帖子。</br>
+        4.本论坛功能尚不完善，如遇到无法解决的问题，请及时向管理员反馈，我们会努力为您解决问题。</br>
+    </p>
+
+
+    </p>
+    <div type="checkbox"><input type="checkbox" id="acceptBox">我已阅读并会遵守教程的要求</div>
+    <p onclick="return click();"><a class="btn btn-primary btn-lg"
+                                    href="javascript:click()" role="button"
+                                    style="align: center;">回到主页</a></p>
+</div>
 </body>
 </html>

@@ -18,6 +18,7 @@ public class ShareDTO {
     private Long commentCount;
     private String description;
     private Integer limitation;
+    private String file;
     private User user;
 
 }

@@ -23,7 +23,7 @@
             </h2>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-            <form action="/publish" method="post" >
+            <form action="/publish" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" th:value="${id}">
                 <input type="hidden" name="area" th:value="${area}">
                 <div class="form-group">
@@ -56,6 +56,7 @@
                     });
                 </script>
                 <div class="form-group">
+                    <input th:if="${area == 'sharing'}" type="file" id="upLoadFile" name="upLoadFile" >
                     <label for="tag">添加标签</label>
                     <input type="text" class="form-control" th:value="${tag}" id="tag" name = "tag"
                            autocomplete="off" placeholder="添加标签，以逗号隔开" onclick="openSelectTag()">
