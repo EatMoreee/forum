@@ -26,6 +26,7 @@ public class UserService {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             user.setEmpiricalValue(100L);
+            user.setState(0);
             userMapper.insert(user);
             return 1;
         }
@@ -88,4 +89,12 @@ public class UserService {
         userExMapper.incGrade(user);
     }
 
+    public void changeState(int state, Long id) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria()
+                .andIdEqualTo(id);
+        User updateUser = new User();
+        updateUser.setState(state);
+        userMapper.updateByExampleSelective(updateUser, userExample);
+    }
 }

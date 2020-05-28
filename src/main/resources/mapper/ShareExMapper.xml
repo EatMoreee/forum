@@ -29,6 +29,12 @@
         where id = #{id}
     </update>
 
+    <update id="incDownload" parameterType="com.example.demo.Model.Share">
+        update share
+        set download_count = download_count + #{downloadCount,jdbcType=INTEGER}
+        where id = #{id}
+    </update>
+
     <select id="selectRelate" parameterType="com.example.demo.Model.Share" resultMap="BaseResultMap">
         select * from share where id != #{id} and tag regexp #{tag}
     </select>

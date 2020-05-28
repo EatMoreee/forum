@@ -11,6 +11,7 @@ create table user
     bio             varchar(255)     null,
     avatar_url      varchar(100)     null,
     grade           int    default 1 not null,
-    empirical_value bigint default 0 not null
+    empirical_value bigint default 0 not null,
+    state           int    default 0 not null
 );
 

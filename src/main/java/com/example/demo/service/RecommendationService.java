@@ -198,6 +198,6 @@ public class RecommendationService {
     }
 
     public void deleteById(Long id) {
-        recommendMapper.selectByPrimaryKey(id);
+        recommendMapper.deleteByPrimaryKey(id);
     }
 }

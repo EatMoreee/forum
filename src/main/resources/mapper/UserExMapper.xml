@@ -12,6 +12,7 @@
         <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
         <result column="grade" jdbcType="INTEGER" property="grade" />
         <result column="empirical_value" jdbcType="BIGINT" property="empiricalValue" />
+        <result column="state" jdbcType="INTEGER" property="state" />
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.Model.User">
         <result column="description" jdbcType="LONGVARCHAR" property="description" />

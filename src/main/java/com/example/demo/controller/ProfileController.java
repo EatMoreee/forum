@@ -43,6 +43,7 @@ public class ProfileController {
                           @RequestParam(name="size", defaultValue = "6") Integer size) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) return "redirect:/";
+        model.addAttribute("area", area);
         if ("questions".equals(action)) {
             model.addAttribute("section","questions");
             model.addAttribute("sectionName","我的提问");
@@ -62,7 +63,6 @@ public class ProfileController {
             if ("share".equals(area)){
                 pagination = shareService.list(user.getId(), page, size);
             }
-            model.addAttribute("area", area);
             model.addAttribute("pagination", pagination);
         }
         else if ("replies".equals(action)) {

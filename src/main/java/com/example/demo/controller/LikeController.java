@@ -76,6 +76,9 @@ public class LikeController {
             Comment comment = commentService.getById(id);
             userService.addGrade(3,comment.getCommentator());
         }
+        else if (type == 7) {
+            shareService.incDownload(id);
+        }
         return ResultDTO.okOf();
     }
 }

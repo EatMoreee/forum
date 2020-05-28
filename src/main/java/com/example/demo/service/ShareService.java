@@ -200,4 +200,11 @@ public class ShareService {
     public void deleteById(Long id) {
         shareMapper.deleteByPrimaryKey(id);
     }
+
+    public void incDownload(Long id) {
+        Share share = new Share();
+        share.setId(id);
+        share.setDownloadCount(1L);
+        shareExMapper.incDownload(share);
+    }
 }

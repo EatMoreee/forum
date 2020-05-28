@@ -23,7 +23,7 @@
                     <div><a class="navbar-brand" href="/profile/questions?area=campus">校园区</a></div>
                     <div><a class="navbar-brand" href="/profile/questions?area=share">资源区</a></div>
                 </div>
-                <input type="hidden" name="area" th:value="${area}">
+                <input type="hidden" name="area" id="area" th:value="${area}">
                 <div class="media" th:each="question: ${pagination.data}">
                     <div class="media-left">
                         <a href="#">
@@ -70,27 +70,27 @@
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
                         <li th:if="${pagination.showFirstPage}">
-                            <a th:href="@{'/profile/'+${section}(page=1)}" aria-label="Previous">
+                            <a th:href="@{'/profile/'+${section}(page=1,area=${area})}" aria-label="Previous">
                                 <span aria-hidden="true">&lt;&lt;</span>
                             </a>
                         </li>
                         <li th:if="${pagination.showPrevious}">
-                            <a th:href="@{'/profile/'+${section}(page=${pagination.page -1})}" aria-label="Previous">
+                            <a th:href="@{'/profile/'+${section}(page=${pagination.page -1},area=${area})}" aria-label="Previous">
                                 <span aria-hidden="true">&lt;</span>
                             </a>
                         </li>
                         <li th:each="page:${pagination.pages}" th:class="${pagination.page == page}? 'active':''">
-                            <a th:href="@{'/profile/'+${section}(page=${page})}" th:text="${page}">
+                            <a th:href="@{'/profile/'+${section}(page=${page},area=${area})}" th:text="${page}">
 
                             </a>
                         </li>
                         <li th:if="${pagination.showNext}">
-                            <a th:href="@{'/profile/'+${section}(page=${pagination.page+1})}" aria-label="Next">
+                            <a th:href="@{'/profile/'+${section}(page=${pagination.page+1},area=${area})}" aria-label="Next">
                                 <span aria-hidden="true">&gt;</span>
                             </a>
                         </li>
                         <li th:if="${pagination.showEndPage}">
-                            <a th:href="@{'/profile/'+${section}(page=${pagination.totalPage})}" aria-label="Next">
+                            <a th:href="@{'/profile/'+${section}(page=${pagination.totalPage},area=${area})}" aria-label="Next">
                                 <span aria-hidden="true">&gt;&gt;</span>
                             </a>
                         </li>

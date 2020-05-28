@@ -62,7 +62,7 @@
                     <button type="submit" class="btn btn-default">搜索</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" th:if="${session.user != null}">
+                    <li class="dropdown" th:if="${session.user != null && session.user.state == 0}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
                             <span>发帖</span>
@@ -116,8 +116,18 @@
                     <h4 class="media-heading">
                         <a th:if="${session.user != null && session.user.grade >= campus.limitation}" th:href="@{'/campus/' + ${campus.id}}" th:text="${campus.title}"></a>
                         <span th:if="${session.user == null || session.user.grade < campus.limitation}" th:text="${campus.title}"></span>
-                        <a th:if="${session.user != null && session.user.id == 1}">|<span class="glyphicon glyphicon-trash" th:data-id="${campus.id}"
-                                                                   onclick="deleteCampus(this)"></span></a>
+                        <a th:if="${session.user != null && session.user.id == 1}">
+                            <span class="glyphicon glyphicon-trash pull-right" th:data-id="${campus.id}"
+                                  onclick="deleteCampus(this)"></span>
+                        </a>
+                        <a th:if="${session.user != null && session.user.id == 1 && campus.user.state == 0}">
+                            <span class="glyphicon glyphicon-volume-off pull-right" th:user-id="${campus.user.id}"
+                                  onclick="ban(this)"></span>
+                        </a>
+                        <a th:if="${session.user != null && session.user.id == 1 && campus.user.state == 1}">
+                            <span class="glyphicon glyphicon-volume-up pull-right" th:user-id="${campus.user.id}"
+                                  onclick="unlock(this)"></span>
+                        </a>
                     </h4>
                     <span style="font-size: 12px;font-weight: normal;color: #999">
                         <span th:text="${campus.viewCount}"></span>次浏览 ·
@@ -161,7 +171,8 @@
             <h3>热门话题</h3>
             <ul style="list-style: none; font-size:13px; padding-left: 0; line-height: 20px">
                 <li th:each="hot : ${hots}">
-                    <a th:href="@{'/campus/'+${hot.id}}" th:text="${hot.title}"></a>
+                    <a th:if="${session.user != null}" th:href="@{'/campus/'+${hot.id}}" th:text="${hot.title}"></a>
+                    <span th:if="${session.user == null}" th:text="${hot.title}"></span>
                 </li>
             </ul>
         </div>

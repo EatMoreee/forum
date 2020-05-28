@@ -38,7 +38,6 @@ public class DeleteController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public Object like(@RequestBody DeleteDTO deleteDTO,
                        HttpServletRequest request) {
-        System.out.println(deleteDTO.getId());
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);

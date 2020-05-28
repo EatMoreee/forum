@@ -51,6 +51,14 @@ function incCommentLike(e) {
     var targetId = e.getAttribute("data-id");
     incLike(6, targetId);
 }
+
+function incDownLoad(e) {
+    var x=document.getElementById("downloadCount").innerHTML;
+    x=parseInt(x)+1;
+    document.getElementById("downloadCount").innerHTML=x;
+    var targetId = e.getAttribute("data-id");
+    incLike(7, targetId);
+}
 function incLike(type,targetId) {
     $.ajax({
         type: "POST",

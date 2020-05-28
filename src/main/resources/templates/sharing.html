@@ -51,7 +51,11 @@
                         <span class="glyphicon glyphicon-tags"></span>
                         <span class="label label-info" th:text="${tag}"></span>
                     </span>
-                    <a th:if="${share.file != null}" th:href="${share.file}"><button>资源下载</button></a>
+                    <br>
+                    <a th:if="${share.file != null}" th:href="${share.file}" th:data-id="${share.id}" onclick="incDownLoad(this)">
+                        <span class="glyphicon glyphicon-download-alt">资源下载</span>
+                        <span th:text="${share.downloadCount}" id="downloadCount"></span>
+                    </a>
                 </div>
             </div>
         </div>
