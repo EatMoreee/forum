@@ -10,6 +10,7 @@ create table campus
     like_count    bigint default 0 not null,
     view_count    bigint default 0 not null,
     comment_count bigint           not null,
+    creator       bigint           not null,
     limitation    int    default 0 not null
 );
 

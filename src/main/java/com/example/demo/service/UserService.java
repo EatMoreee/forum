@@ -26,6 +26,7 @@ public class UserService {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             user.setEmpiricalValue(100L);
+            user.setGrade(1);
             user.setState(0);
             userMapper.insert(user);
             return 1;
