@@ -90,7 +90,7 @@
                         </ul>
                     </li>
                     <li th:if="${session.user == null}">
-                        <a href="https://github.com/login/oauth/authorize?client_id=8001a245cc2ff9985a75&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a>
+                        <a href="/">登录</a>
                     </li>
 
                 </ul>
@@ -178,5 +178,6 @@
         </div>
     </div>
 </div>
+<div th:insert="~{footer :: foot}"></div>
 </body>
 </html>

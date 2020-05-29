@@ -69,10 +69,7 @@ function incLike(type,targetId) {
             "type": type
         }),
         success: function (response) {
-            if (response.code == 200) {
-                $("#comment_section").hide();
-            }
-            else {
+            if(response.code != 200) {
                 if (response.code == 2003) {
                     var isAccept = confirm(response.message);
                     if (isAccept) {

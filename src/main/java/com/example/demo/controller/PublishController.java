@@ -97,15 +97,15 @@ public class PublishController {
         model.addAttribute("area",area);
         model.addAttribute("limit", limit);
         model.addAttribute("sessionName", "发起");
-        if (title == null || title == "") {
+        if (title == null || title.trim().equals("") ) {
             model.addAttribute("error", "标题不能为空");
             return "publish";
         }
-        if (description == null || description == "") {
+        if (description == null || description.trim().equals("")) {
             model.addAttribute("error","问题补充不能为空");
             return "publish";
         }
-        if (tag == null || tag == "") {
+        if (tag == null || tag.trim().equals("")) {
             model.addAttribute("error", "标签不能为空");
             return "publish";
         }
