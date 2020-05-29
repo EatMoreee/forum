@@ -8,7 +8,7 @@
         <result column="token" jdbcType="CHAR" property="token" />
         <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate" />
         <result column="gmt_modified" jdbcType="BIGINT" property="gmtModified" />
-        <result column="bio" jdbcType="VARCHAR" property="bio" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
         <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
         <result column="grade" jdbcType="INTEGER" property="grade" />
         <result column="empirical_value" jdbcType="BIGINT" property="empiricalValue" />
