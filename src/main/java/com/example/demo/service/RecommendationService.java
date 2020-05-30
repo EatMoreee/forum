@@ -135,29 +135,13 @@ public class RecommendationService {
         recommendExMapper.incView(recommend);
     }
 
-    public void createOrUpdate(Recommend recommend) {
-        if (recommend.getId() == null) {
+    public void create(Recommend recommend) {
             recommend.setGmtCreate(System.currentTimeMillis());
             recommend.setGmtModified(recommend.getGmtCreate());
             recommend.setViewCount(0L);
             recommend.setCommentCount(0L);
             recommend.setLikeCount(0L);
             recommendMapper.insert(recommend);
-        }
-        else {
-            Recommend updateRecommendation = new Recommend();
-            updateRecommendation.setGmtModified(System.currentTimeMillis());
-            updateRecommendation.setTitle(recommend.getTitle());
-            updateRecommendation.setDescription(recommend.getDescription());
-            updateRecommendation.setTag(recommend.getTag());
-            RecommendExample recommendExample = new RecommendExample();
-            recommendExample.createCriteria()
-                    .andIdEqualTo(recommend.getId());
-            int update = recommendMapper.updateByExampleSelective(updateRecommendation, recommendExample);
-            if (update != 1) {
-                throw new CustomizeException(CustomizeErrorCode.RECOMMENDATION_NOT_FOUND);
-            }
-        }
     }
 
     public List<Recommend> HotList() {

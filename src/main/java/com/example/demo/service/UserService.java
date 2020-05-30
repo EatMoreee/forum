@@ -114,6 +114,7 @@ public class UserService {
         userExample.createCriteria()
                 .andNameEqualTo(name);
         List<User> users = userMapper.selectByExample(userExample);
+        if (users.size() <= 0 || users == null) return false;
         if (users.get(0).getPassword().equals(password)) return true;
         return false;
     }

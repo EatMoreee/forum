@@ -87,6 +87,7 @@ public class PublishController {
                             @RequestParam(value = "limit", required = false) Integer limit,
                             HttpServletRequest request,
                             Model model) {
+        model.addAttribute("id",id);
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
@@ -106,11 +107,6 @@ public class PublishController {
             model.addAttribute("error", "标签不能为空");
             return "publish";
         }
-        /*String isValid = TagCache.filterIsValid(tag);
-        if (StringUtils.isNotBlank(isValid)) {
-            model.addAttribute("error", "输入非法标签"+isValid);
-            return "publish";
-        }*/
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             model.addAttribute("error","用户未登录");
@@ -139,7 +135,7 @@ public class PublishController {
             recommend.setCreator(user.getId());
             recommend.setId(id);
             recommend.setLimitation(limit);
-            recommendationService.createOrUpdate(recommend);
+            recommendationService.create(recommend);
             return "redirect:/recommend";
         }
         else if("solution".equals(area)) {
@@ -150,7 +146,7 @@ public class PublishController {
             codeSolve.setCreator(user.getId());
             codeSolve.setId(id);
             codeSolve.setLimitation(limit);
-            codeService.createOrUpdate(codeSolve);
+            codeService.create(codeSolve);
             return "redirect:/code";
         }
         else if("record".equals(area)) {
@@ -161,19 +157,17 @@ public class PublishController {
             campus.setCreator(user.getId());
             campus.setId(id);
             campus.setLimitation(limit);
-            campusService.createOrUpdate(campus);
+            campusService.create(campus);
             return "redirect:/campus";
         }
         else if("sharing".equals(area)) {
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
             MultipartFile file = multiRequest.getFile("upLoadFile");
             String url = null;
-            if (file != null) {
-                try {
-                    url = fileService.upDateFile(file);
-                } catch (FileException e) {
-                    e.printStackTrace();
-                }
+            try {
+                url = fileService.upDateFile(file);
+            } catch (FileException e) {
+                e.printStackTrace();
             }
             Share share = new Share();
             share.setTitle(title);
@@ -183,7 +177,7 @@ public class PublishController {
             share.setId(id);
             share.setLimitation(limit);
             share.setFile(url);
-            shareService.createOrUpdate(share);
+            shareService.create(share);
             return "redirect:/share";
         }
         return "redirect:/";

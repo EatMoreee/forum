@@ -97,29 +97,13 @@ public class ShareService {
         return paginationDTO;
     }
 
-    public void createOrUpdate(Share share) {
-        if (share.getId() == null) {
+    public void create(Share share) {
             share.setGmtCreate(System.currentTimeMillis());
             share.setViewCount(0L);
             share.setLikeCount(0L);
             share.setCommentCount(0L);
             share.setDownloadCount(0L);
             shareMapper.insert(share);
-        }
-        else {
-            Share updateShare = new Share();
-            updateShare.setGmtCreate(System.currentTimeMillis());
-            updateShare.setTitle(share.getTitle());
-            updateShare.setDescription(share.getDescription());
-            updateShare.setTag(share.getTag());
-            ShareExample shareExample = new ShareExample();
-            shareExample.createCriteria()
-                    .andIdEqualTo(share.getId());
-            int update = shareMapper.updateByExampleSelective(updateShare, shareExample);
-            if (update != 1) {
-                throw new CustomizeException(CustomizeErrorCode.SHARE_NOT_FOUND);
-            }
-        }
     }
 
     public ShareDTO getById(Long id) {

@@ -45,10 +45,12 @@ function incShareLike(e) {
     incLike(5, targetId);
 }
 function incCommentLike(e) {
-    var x=document.getElementById("commentLike").innerHTML;
-    x=parseInt(x)+1;
-    document.getElementById("commentLike").innerHTML=x;
     var targetId = e.getAttribute("data-id");
+    var id = 'commentLike' + targetId;
+    var x=document.getElementById(id).innerHTML;
+    x=parseInt(x)+1;
+    document.getElementById(id).innerHTML=x;
+
     incLike(6, targetId);
 }
 

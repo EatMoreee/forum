@@ -113,7 +113,7 @@ public class QuestionService {
     }
 
     public void createOrUpdate(Question question) {
-        if (question.getId() == null) {
+        if (question.getId() == null || question.getId() == 0) {
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
             question.setViewCount(0L);

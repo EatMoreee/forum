@@ -95,28 +95,12 @@ public class CampusService {
         return paginationDTO;
     }
 
-    public void createOrUpdate(Campus campus) {
-        if (campus.getId() == null) {
+    public void create(Campus campus) {
             campus.setGmtCreate(System.currentTimeMillis());
             campus.setViewCount(0L);
             campus.setLikeCount(0L);
             campus.setCommentCount(0L);
             campusMapper.insert(campus);
-        }
-        else {
-            Campus updateCampus = new Campus();
-            updateCampus.setGmtCreate(System.currentTimeMillis());
-            updateCampus.setTitle(campus.getTitle());
-            updateCampus.setDescription(campus.getDescription());
-            updateCampus.setTag(campus.getTag());
-            CampusExample campusExample = new CampusExample();
-            campusExample.createCriteria()
-                    .andIdEqualTo(campus.getId());
-            int update = campusMapper.updateByExampleSelective(updateCampus, campusExample);
-            if (update != 1) {
-                throw new CustomizeException(CustomizeErrorCode.RECORD_NOT_FOUND);
-            }
-        }
     }
 
 

@@ -83,7 +83,7 @@
                             <div class="menu">
                                 <a><span class="glyphicon glyphicon-thumbs-up" th:data-id="${comment.id}"
                                     onclick="incCommentLike(this)"></span></a>
-                                <span th:text="${comment.likeCount}" id="commentLike"></span>
+                                <span th:text="${comment.likeCount}" th:id="${'commentLike'+ comment.id}"></span>
                                 <a><span class="glyphicon glyphicon-comment" th:data-id="${comment.id}"
                                          onclick="collapseComment(this)"></span></a>
                                 <span th:text="${comment.commentCount}"></span>

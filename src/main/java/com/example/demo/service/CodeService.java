@@ -136,27 +136,11 @@ public class CodeService {
         codeSolveExMapper.incView(codeSolve);
     }
 
-    public void createOrUpdate(CodeSolve codeSolve) {
-        if (codeSolve.getId() == null) {
+    public void create(CodeSolve codeSolve) {
             codeSolve.setCreateTime(System.currentTimeMillis());
             codeSolve.setViewCount(0L);
             codeSolve.setLikeCount(0L);
             codeSolveMapper.insert(codeSolve);
-        }
-        else {
-            CodeSolve updateCode = new CodeSolve();
-            updateCode.setCreateTime(System.currentTimeMillis());
-            updateCode.setTitle(codeSolve.getTitle());
-            updateCode.setDescription(codeSolve.getDescription());
-            updateCode.setTag(codeSolve.getTag());
-            CodeSolveExample codeSolveExample = new CodeSolveExample();
-            codeSolveExample.createCriteria()
-                    .andIdEqualTo(codeSolve.getId());
-            int update = codeSolveMapper.updateByExampleSelective(updateCode, codeSolveExample);
-            if (update != 1) {
-                throw new CustomizeException(CustomizeErrorCode.SOLUTION_NOT_FOUND);
-            }
-        }
     }
 
     public List<CodeSolve> HotList() {
