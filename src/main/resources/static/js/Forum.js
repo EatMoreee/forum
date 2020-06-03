@@ -9,6 +9,45 @@ function comment(e) {
     commentTarget(commentId,2, content);
 }
 
+function commentTarget(targetId, type, content) {
+    if (!content) {
+        alert("不能回复空内容");
+        return;
+    }
+    $.ajax({
+        type: "POST",
+        url: "/comment",
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "parentId": targetId,
+            "content": content,
+            "type": type
+        }),
+        success: function (response) {
+            if (response.code == 200) {
+                $("#comment_section").hide();
+                window.location.reload();
+            }
+            else {
+                if (response.code == 2003) {
+                    var isAccept = confirm(response.message);
+                    if (isAccept) {
+                        alert("请先登录");
+                        window.localStorage.setItem("closable", true);
+                    }
+
+                }
+                else {
+                    alert(response.message);
+                }
+            }
+            console.log(response);
+        },
+        dataType: "json"
+    });
+}
+
+
 function incQuestionLike(e) {
     var x=document.getElementById("likeCount").innerHTML;
     x=parseInt(x)+1;
@@ -75,7 +114,7 @@ function incLike(type,targetId) {
                 if (response.code == 2003) {
                     var isAccept = confirm(response.message);
                     if (isAccept) {
-                        window.open("https://github.com/login/oauth/authorize?client_id=8001a245cc2ff9985a75&redirect_uri=http://localhost:8080/callback&scope=user&state=1");
+                        alert("请先登录");
                         window.localStorage.setItem("closable", true);
                     }
 
@@ -89,44 +128,6 @@ function incLike(type,targetId) {
         dataType: "json"
     });
 }
-function commentTarget(targetId, type, content) {
-    if (!content) {
-        alert("不能回复空内容");
-        return;
-    }
-    $.ajax({
-        type: "POST",
-        url: "/comment",
-        contentType: 'application/json',
-        data: JSON.stringify({
-            "parentId": targetId,
-            "content": content,
-            "type": type
-        }),
-        success: function (response) {
-            if (response.code == 200) {
-                $("#comment_section").hide();
-                window.location.reload();
-            }
-            else {
-                if (response.code == 2003) {
-                    var isAccept = confirm(response.message);
-                    if (isAccept) {
-                        window.open("https://github.com/login/oauth/authorize?client_id=8001a245cc2ff9985a75&redirect_uri=http://localhost:8080/callback&scope=user&state=1");
-                        window.localStorage.setItem("closable", true);
-                    }
-
-                }
-                else {
-                    alert(response.message);
-                }
-            }
-            console.log(response);
-        },
-        dataType: "json"
-    });
-}
-
 
 function collapseComment(e) {
     var id = e.getAttribute("data-id");
