@@ -174,6 +174,10 @@ public class PublishController {
         else if("sharing".equals(area)) {
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
             MultipartFile file = multiRequest.getFile("upLoadFile");
+            if (file == null || file.getSize() <= 0) {
+                model.addAttribute("error","未选择文件");
+                return "publish";
+            }
             String url = null;
             try {
                 url = fileService.upDateFile(file);
