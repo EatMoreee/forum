@@ -13,22 +13,22 @@ public class RecordTagCache {
         List<TagDTO> tagDTOS = new ArrayList<>();
         TagDTO food = new TagDTO();
         food.setCategoryName("美食");
-        food.setTags(Arrays.asList("火锅","干锅", "粤菜", "湘菜", "小龙虾","烧烤","炸鸡","甜点","面食","串串","麻辣烫","快餐","东北美食","西餐","自助","海鲜","KFC"));
+        food.setTags(Arrays.asList("hot-pot","dry-pot", "cantonese", "xiangcai", "crayfish","barbecue","fried-chicken","dessert","pasta","spicy","northeast-cuisine","western-food","self-service","seafood","kfc"));
         tagDTOS.add(food);
 
         TagDTO drink = new TagDTO();
         drink.setCategoryName("饮料");
-        drink.setTags(Arrays.asList("coco","一点点","喜茶","星巴克","乐乐茶","快乐柠檬"));
+        drink.setTags(Arrays.asList("coco","alittle-tea","HEYTEA","starbucks","LELECHA","happy-lemon"));
         tagDTOS.add(drink);
 
         TagDTO travel = new TagDTO();
         travel.setCategoryName("游玩");
-        travel.setTags(Arrays.asList("名人故居","自然风光","历史遗址","网红打卡","度假村","公园游乐场"));
+        travel.setTags(Arrays.asList("celebrity-former-residence","natural-scenery","historical-site","celebrity-punch","resort","park-playground"));
         tagDTOS.add(travel);
 
         TagDTO play = new TagDTO();
         play.setCategoryName("娱乐");
-        play.setTags(Arrays.asList("酒吧","KTV","健身中心","电玩游戏厅","diy手工坊","网吧/电竞","茶馆", "VR"));
+        play.setTags(Arrays.asList("bar","ktv","gym","video-game-hall","diy","internet-cafe/e-sports","teahouse", "vr"));
         tagDTOS.add(play);
 
 

@@ -138,7 +138,7 @@ public class PublishController {
             question.setLimitation(limit);
             questionService.createOrUpdate(question);
         }
-        else if("recommendation".equals(area)){
+        if("recommendation".equals(area)){
             Recommend recommend = new Recommend();
             recommend.setTitle(title);
             recommend.setDescription(description);
@@ -149,7 +149,7 @@ public class PublishController {
             recommendationService.create(recommend);
             return "redirect:/recommend";
         }
-        else if("solution".equals(area)) {
+        if("solution".equals(area)) {
             CodeSolve codeSolve = new CodeSolve();
             codeSolve.setTitle(title);
             codeSolve.setDescription(description);
@@ -160,7 +160,7 @@ public class PublishController {
             codeService.create(codeSolve);
             return "redirect:/code";
         }
-        else if("record".equals(area)) {
+        if("record".equals(area)) {
             Campus campus = new Campus();
             campus.setTitle(title);
             campus.setDescription(description);
@@ -171,7 +171,7 @@ public class PublishController {
             campusService.create(campus);
             return "redirect:/campus";
         }
-        else if("sharing".equals(area)) {
+        if("sharing".equals(area)) {
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
             MultipartFile file = multiRequest.getFile("upLoadFile");
             if (file == null || file.getSize() <= 0) {

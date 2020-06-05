@@ -32,14 +32,11 @@ public class SolutionTagCache {
         tagDTOS.add(db);
 
         TagDTO tools = new TagDTO();
-        tools.setCategoryName("开发工具");
-        tools.setTags(Arrays.asList("git","github","visual-studio-code", "vim", "sublime", "intellij-idea", "eclipse", "maven", "ide", "svn", "visual-stdio", "atom emacs", "textmate", "hg"));
+        tools.setCategoryName("算法");
+        tools.setTags(Arrays.asList("divide and conquer algorithm","graph-theory","tree", "mathematical-theory", "stack", "queue", "dp", "string", "geometric", "svn", "visual-stdio"));
         tagDTOS.add(tools);
 
-        TagDTO project=new TagDTO();
-        project.setCategoryName("科目");
-        project.setTags(Arrays.asList("系统编程","数据库","面向对象编程(JAVA)","数学建模","软件工程","数学分析","离散数学","算法"));
-        tagDTOS.add(project);
+
 
         return tagDTOS;
     }

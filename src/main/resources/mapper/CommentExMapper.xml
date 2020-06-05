@@ -13,13 +13,13 @@
         <result column="comment_count" jdbcType="BIGINT" property="commentCount" />
     </resultMap>
     <update id="incCommentCount" parameterType="com.example.demo.Model.Comment">
-        update COMMENT
+        update comment
         set comment_count = comment_count + #{commentCount,jdbcType=INTEGER}
         where id = #{id}
     </update>
 
     <update id="incLike" parameterType="com.example.demo.Model.Comment">
-        update COMMENT
+        update comment
         set like_count = like_count + #{likeCount,jdbcType=INTEGER}
         where id = #{id}
     </update>
