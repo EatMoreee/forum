@@ -19,12 +19,13 @@ public class CampusController {
     @GetMapping("/campus")
     public String index(@RequestParam(name = "search", required = false) String search,
                         @RequestParam(name="page", defaultValue = "1") Integer page,
-                        @RequestParam(name="size", defaultValue = "5") Integer size,
+                        @RequestParam(name="size", defaultValue = "8") Integer size,
                         Model model) {
         PaginationDTO pagination = campusService.list(search, page, size);
         List<Campus> hots = campusService.HotList();
         model.addAttribute("pagination",pagination);
         model.addAttribute("hots", hots);
+        model.addAttribute("search", search);
         return "campus";
     }
 }

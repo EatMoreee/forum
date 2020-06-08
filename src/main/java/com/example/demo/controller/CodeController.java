@@ -19,12 +19,13 @@ public class CodeController {
     @GetMapping("/code")
     public String index(@RequestParam(name = "search", required = false) String search,
                         @RequestParam(name="page", defaultValue = "1") Integer page,
-                        @RequestParam(name="size", defaultValue = "5") Integer size,
+                        @RequestParam(name="size", defaultValue = "8") Integer size,
                         Model model) {
         PaginationDTO pagination = codeService.list(search, page, size);
         List<CodeSolve> hots = codeService.HotList();
         model.addAttribute("pagination",pagination);
         model.addAttribute("hots", hots);
+        model.addAttribute("search", search);
         return "code";
     }
 }

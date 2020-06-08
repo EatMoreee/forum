@@ -48,7 +48,7 @@ public class ProfileController {
                           @PathVariable(name = "action") String action,
                           @RequestParam(name = "area", defaultValue = "question") String area,
                           @RequestParam(name="page", defaultValue = "1") Integer page,
-                          @RequestParam(name="size", defaultValue = "6") Integer size) {
+                          @RequestParam(name="size", defaultValue = "9") Integer size) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) return "redirect:/";
         model.addAttribute("area", area);

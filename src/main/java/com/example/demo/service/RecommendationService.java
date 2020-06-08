@@ -155,25 +155,6 @@ public class RecommendationService {
         return recommendList;
     }
 
-    public List<Recommend> searchKey(String search) {
-        RecommendExample recommendExample = new RecommendExample();
-        recommendExample.setOrderByClause("view_count desc");
-        List<Recommend> recommends = recommendMapper.selectByExample(recommendExample);
-        List<Recommend> recommendList = new ArrayList<>();
-        for(Recommend recommend : recommends) {
-            if(recommend.getTitle().indexOf(search) != -1) {
-                recommendList.add(recommend);
-            }
-            else if (recommend.getDescription().indexOf(search) != -1) {
-                recommendList.add(recommend);
-            }
-            else if (recommend.getTag().indexOf(search) != -1) {
-                recommendList.add(recommend);
-            }
-        }
-        return recommendList;
-    }
-
     public void incLike(Long id) {
         Recommend recommend = new Recommend();
         recommend.setId(id);

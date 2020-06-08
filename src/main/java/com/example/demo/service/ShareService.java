@@ -155,24 +155,6 @@ public class ShareService {
         return shareList;
     }
 
-    public List<Share> searchKey(String search) {
-        ShareExample shareExample = new ShareExample();
-        shareExample.setOrderByClause("view_count desc");
-        List<Share> shares = shareMapper.selectByExample(shareExample);
-        List<Share> shareList = new ArrayList<>();
-        for(Share share : shares) {
-            if(share.getTitle().indexOf(search) != -1) {
-                shareList.add(share);
-            }
-            else if (share.getDescription().indexOf(search) != -1) {
-                shareList.add(share);
-            }
-            else if (share.getTag().indexOf(search) != -1) {
-                shareList.add(share);
-            }
-        }
-        return shareList;
-    }
 
     public void incLike(Long id) {
         Share share = new Share();

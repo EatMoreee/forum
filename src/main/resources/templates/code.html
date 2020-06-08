@@ -21,7 +21,74 @@
     }
 </script>
 <body>
-<div th:insert="~{navigation :: nav}"></div>
+<div th:fragment="nav">
+    <div class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a href="/" class="navbar-brand">Learning Forum</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">讨论区
+                        <!--                        <span class="sr-only">(current)</span>-->
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/recommend">课程推荐</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  href="/code">刷题</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/campus">校园周边</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/share">资源共享</a>
+                </li>
+                <form class="form-inline my-2 my-lg-0" action="/code" method="get">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search" th:value="${search}">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown dropdown-slim" th:if="${session.user != null && session.user.state == 0}">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">发帖 <span class="caret"></span></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/publish?area=discuss" >讨论区</a>
+                        <a class="dropdown-item" href="/publish?area=recommendation" >课程推荐</a>
+                        <a class="dropdown-item" href="/publish?area=solution" >Coding</a>
+                        <a class="dropdown-item" href="/publish?area=record" >校园周边</a>
+                        <a class="dropdown-item" href="/publish?area=sharing" >资源共享</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" th:if="${session.user != null && session.user.state == 0}">
+                    <a class="nav-link" href="/profile/replies">
+                        <i class="fa fa-bell" style="font-size:20px;"></i>
+                        <span class="badge" th:if="${session.user != null}" th:text="${session.unReadCount}"></span>
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown dropdown-slim" th:if="${session.user != null && session.user.state == 0}">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span th:text="${session.user.getName()}"></span><span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="download">
+                        <a class="dropdown-item" href="/profile/information">个人资料</a>
+                        <a class="dropdown-item" href="/profile/questions">我的问题</a>
+                        <a class="dropdown-item" href="/logout">退出登录</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" th:if="${session.user == null}">
+                    <a class="nav-link" href="/login">登录</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</div>
 <!--首页讨论区-->
 <div class="container-fluid">
     <div class="row">

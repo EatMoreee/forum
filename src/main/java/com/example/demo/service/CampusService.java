@@ -153,24 +153,6 @@ public class CampusService {
         return campusList;
     }
 
-    public List<Campus> searchKey(String search) {
-        CampusExample campusExample = new CampusExample();
-        campusExample.setOrderByClause("view_count desc");
-        List<Campus> campuses = campusMapper.selectByExample(campusExample);
-        List<Campus> campusList = new ArrayList<>();
-        for(Campus campus : campuses) {
-            if(campus.getTitle().indexOf(search) != -1) {
-                campusList.add(campus);
-            }
-            else if (campus.getDescription().indexOf(search) != -1) {
-                campusList.add(campus);
-            }
-            else if (campus.getTag().indexOf(search) != -1) {
-                campusList.add(campus);
-            }
-        }
-        return campusList;
-    }
 
     public void incLike(Long id) {
         Campus campus = new Campus();

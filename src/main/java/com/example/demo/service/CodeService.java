@@ -154,26 +154,6 @@ public class CodeService {
         return codeSolveList;
     }
 
-
-    public List<CodeSolve> searchKey(String search) {
-        CodeSolveExample codeSolveExample = new CodeSolveExample();
-        codeSolveExample.setOrderByClause("view_count desc");
-        List<CodeSolve> codeSolves = codeSolveMapper.selectByExample(codeSolveExample);
-        List<CodeSolve> codeSolveList = new ArrayList<>();
-        for(CodeSolve codeSolve : codeSolves) {
-            if(codeSolve.getTitle().indexOf(search) != -1) {
-                codeSolveList.add(codeSolve);
-            }
-            else if (codeSolve.getDescription().indexOf(search) != -1) {
-                codeSolveList.add(codeSolve);
-            }
-            else if (codeSolve.getTag().indexOf(search) != -1) {
-                codeSolveList.add(codeSolve);
-            }
-        }
-        return codeSolveList;
-    }
-
     public void incLike(Long id) {
         CodeSolve codeSolve = new CodeSolve();
         codeSolve.setId(id);
