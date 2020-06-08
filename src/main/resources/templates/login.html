@@ -5,9 +5,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/general.css"/>
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/Administrators.js" type="application/javascript"></script>
+
+    <style>
+        div.container-fluid{
+            float:right;
+        }
+        body{
+            background-image: url("images/bg1.jpg");
+            background-repeat: no-repeat;
+            background-size:100% 100%;
+            background-attachment: fixed;
+
+        }
+    </style>
 </head>
 <script>
     window.onload = function () {
@@ -18,37 +32,45 @@
         }
     }
 </script>
-<body>
+<body >
 <div th:insert="~{navigation :: nav}"></div>
-<!--首页讨论区-->
-<div class="container-fluid">
-    <div class="container-fluid">
-        <div><a class="navbar-brand" href="/user/login">登录</a></div>
-        <div><a class="navbar-brand" href="/user/register">注册</a></div>
-    </div>
-    <div class="form-group" th:if="${section == 'login'}">
-        <form action="/login" method="post">
-            <label for="name">用户名:</label>
-            <input type="text" class="form-control" id="name" name="name" th:value="${name}" placeholder="用户名">
-            <label for="password">密码:</label>
-            <input type="password" class="form-control" id="password" name="password" th:value="${password}">
-            <button type="submit" class="btn btn-success">登录</button>
-        </form>
-    </div>
-    <div class="form-group" th:if="${section == 'register'}">
-        <form action="/register" method="post">
-            <label for="name">用户名:</label>
-            <input type="text" class="form-control" id="newName" name="name" th:value="${name}" placeholder="用户名">
-            <label for="password">密码:</label>
-            <input type="password" class="form-control" id="newPassword" name="password" th:value="${password}">
-            <button type="submit" class="btn btn-success">注册</button>
-        </form>
-    </div>
-    <div>
-        <span class="alert alert-danger" th:text="${error}" th:if="${error != null}"></span>
+
+<div class="container-fluid" >
+    <div class="card border-primary mb-3" style="max-width: 25rem;margin:0 auto;margin-top:100px;opacity:0.75;">
+        <div class="card-header" style="color:#273c75;text-align: center;opacity:1;" ><h4>Welcome to learningforum</h4></div>
+        <div class="card-body">
+            <div class="container-fluid" style="margin: 0 auto;text-align: center;opacity:1;">
+                <div><a class="navbar-brand" href="/user/login">登录</a>
+                    <a class="navbar-brand" href="/user/register">注册</a></div>
+            </div>
+            <div class="form-group" style="opacity:1;" th:if="${section == 'login'}">
+                <form action="/login" method="post">
+                    <label style="opacity:1" for="name">用户名:</label>
+                    <input style="opacity:1" type="text" class="form-control" id="name" name="name" th:value="${name}" placeholder="用户名">
+                    <label style="opacity:1" for="password">密码:</label>
+                    <input style="opacity:1" type="password" class="form-control" id="password" name="password" th:value="${password}"><br>
+                    <button style="display:block;margin:0 auto;width:200px;opacity:1;" type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+            <div class="form-group" style="opacity:1;" th:if="${section == 'register'}">
+                <form action="/register" method="post">
+                    <label style="opacity:1" for="name">用户名:</label>
+                    <input style="opacity:1" type="text" class="form-control" id="newName" name="name" th:value="${name}" placeholder="用户名">
+                    <label style="opacity:1" for="password">密码:</label>
+                    <input style="opacity:1" type="password" class="form-control" id="newPassword" name="password" th:value="${password}">
+                    <button style="display:block;margin:0 auto;margin-top:21.5px;width:200px;opacity:1;" type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+
+            <div>
+                <span class="alert alert-danger" th:text="${error}" th:if="${error != null}"></span>
+            </div>
+        </div>
     </div>
 
+
 </div>
-<div th:insert="~{footer :: foot}"></div>
+<div style="margin-top:200px;" th:insert="~{footer :: foot}"></div>
+</div>
 </body>
 </html>

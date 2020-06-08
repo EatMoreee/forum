@@ -5,6 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/css/general.css"/>
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/Administrators.js" type="application/javascript"></script>
@@ -19,92 +21,14 @@
     }
 </script>
 <body>
-<div th:fragment="nav">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">讨论区</span>
-                </button>
-                <a class="navbar-brand" href="/">讨论区</a>
-            </div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">课程推荐</span>
-                </button>
-                <a class="navbar-brand" href="/recommend">课程推荐</a>
-            </div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">刷题</span>
-                </button>
-                <a class="navbar-brand" href="/code">刷题</a>
-            </div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">校园周边</span>
-                </button>
-                <a class="navbar-brand" href="/campus">校园周边</a>
-            </div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">资源共享</span>
-                </button>
-                <a class="navbar-brand" href="/share">资源共享</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left" action="/code" method="get">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="搜索问题" name="search">
-                    </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" th:if="${session.user != null && session.user.state == 0}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">
-                            <span>发帖</span>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/publish?area=discuss" >讨论区</a></li>
-                            <li><a href="/publish?area=recommendation" >课程推荐</a></li>
-                            <li><a href="/publish?area=solution" >Coding</a></li>
-                            <li><a href="/publish?area=record" >校园周边</a></li>
-                            <li><a href="/publish?area=sharing" >资源共享</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/profile/replies"><span class="glyphicon glyphicon-bell"><span class="badge" th:if="${session.user != null}" th:text="${session.unReadCount}"></span></a></li>
-                    <li class="dropdown" th:if="${session.user != null}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">
-                            <span th:text="${session.user.getName()}"></span>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/profile/information">个人资料</a></li>
-                            <li><a href="/profile/questions">我的问题</a></li>
-                            <li><a href="/logout">退出登录</a></li>
-                        </ul>
-                    </li>
-                    <li th:if="${session.user == null}">
-                        <a href="/login">登录</a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
+<div th:insert="~{navigation :: nav}"></div>
 <!--首页讨论区-->
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-list" aria-hidden="true" style="height: 38px; width: 38px"></span>Coding</h2>
+            <h2><span class="fa fa-list big-icon" aria-hidden="true" style="height: 38px; width: 38px"></span>Coding</h2>
             <hr>
-            <div class="media" th:each="code: ${pagination.data}">
+            <div class="media post-list" th:each="code: ${pagination.data}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-rounded"
@@ -113,22 +37,22 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading">
+                    <h5 class="media-heading">
                         <a th:if="${session.user != null && session.user.grade >= code.limitation}" th:href="@{'/code/' + ${code.id}}" th:text="${code.title}"></a>
                         <span th:if="${session.user == null || session.user.grade < code.limitation}" th:text="${code.title}"></span>
                         <a th:if="${session.user != null && session.user.id == 1}">
-                            <span class="glyphicon glyphicon-trash pull-right" th:data-id="${code.id}"
+                            <span title="delete this question" class="fa fa-trash right-icon" th:data-id="${code.id}"
                                   onclick="deleteCode(this)"></span>
                         </a>
                         <a th:if="${session.user != null && session.user.id == 1 && code.user.state == 0}">
-                            <span class="glyphicon glyphicon-volume-off pull-right" th:user-id="${code.user.id}"
+                            <span title="mute this user" class="fa fa-ban right-icon" th:user-id="${code.user.id}"
                                   onclick="ban(this)"></span>
                         </a>
                         <a th:if="${session.user != null && session.user.id == 1 && code.user.state == 1}">
-                            <span class="glyphicon glyphicon-volume-up pull-right" th:user-id="${code.user.id}"
+                            <span title="reopen this post" class="fa fa-volume-up right-icon" th:user-id="${code.user.id}"
                                   onclick="unlock(this)"></span>
                         </a>
-                    </h4>
+                    </h5>
                     <span style="font-size: 12px;font-weight: normal;color: #999">
                         <span th:text="${code.viewCount}"></span>次浏览 ·
                         <span th:text="${#dates.format(code.createTime,'yyyy-MM-dd HH:mm')}"></span>
@@ -136,41 +60,32 @@
                 </div>
             </div>
 
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li th:if="${pagination.showFirstPage}">
-                        <a href="/code?page=1" aria-label="Previous">
-                            <span aria-hidden="true">&lt;&lt;</span>
+            <nav class="inpage-nav">
+                <ul class="pagination inpage-nav-ul">
+                    <li class="page-item" th:if="${pagination.showPrevious}">
+                        <a class="page-link" th:href="@{/code(page=${pagination.page -1})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li th:if="${pagination.showPrevious}">
-                        <a th:href="@{/code(page=${pagination.page -1})}" aria-label="Previous">
-                            <span aria-hidden="true">&lt;</span>
-                        </a>
-                    </li>
-                    <li th:each="page:${pagination.pages}" th:class="${pagination.page == page}? 'active':''">
-                        <a th:href="@{/code(page=${page})}" th:text="${page}">
+                    <li th:each="page:${pagination.pages}" th:class="${pagination.page == page}? 'page-item active':'page-item'">
+                        <a class="page-link" th:href="@{/code(page=${page})}" th:text="${page}">
 
                         </a>
                     </li>
                     <li th:if="${pagination.showNext}">
-                        <a th:href="@{/code(page=${pagination.page+1})}" aria-label="Next">
-                            <span aria-hidden="true">&gt;</span>
-                        </a>
-                    </li>
-                    <li th:if="${pagination.showEndPage}">
-                        <a th:href="@{/code(page=${pagination.totalPage})}" aria-label="Next">
-                            <span aria-hidden="true">&gt;&gt;</span>
+                        <a class="page-link" th:href="@{/code(page=${pagination.page+1})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                 </ul>
             </nav>
         </div>
 
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="margin-top: 9px">
             <h3>热门话题</h3>
+            <hr class="hot-posts-hr">
             <ul style="list-style: none; font-size:13px; padding-left: 0; line-height: 20px">
-                <li th:each="hot : ${hots}">
+                <li class="hot-posts" th:each="hot : ${hots}">
                     <a th:if="${session.user != null}" th:href="@{'/code/'+${hot.id}}" th:text="${hot.title}"></a>
                     <span th:if="${session.user == null}" th:text="${hot.title}"></span>
                 </li>

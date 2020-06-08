@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/css/forum.css"/>
     <link rel="stylesheet" href="/css/editormd.preview.min.css"/>
+    <link rel="stylesheet" href="/css/general.css"/>
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/moment.js" type="application/javascript"></script>
@@ -23,19 +24,19 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <!--正文-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h4><span th:text="${share.title}"></span></h4>
+                <h3><span th:text="${share.title}"></span></h3>
                 <span class="text-desc" style="font-size: 12px;font-weight: normal;color: #999">
                 作者：<span th:text="${share.user.name}"></span>|
                 发布时间：<span th:text="${#dates.format(share.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>|
                 阅读数：<span th:text="${share.viewCount}"></span>|
-                点赞数：<a><span class="glyphicon glyphicon-thumbs-up" th:data-id="${share.id}"
+                点赞数：<a><span class="fa fa-thumbs-o-up" th:data-id="${share.id}"
                              onclick="incShareLike(this)"></span>
                       </a>
                 <span th:text="${share.likeCount}" id="shareLike"></span>
                 </span>
                 <hr>
                 <!--问题内容-->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="share-view">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 post-content" id="share-view">
                     <textarea style="display:none;" th:text="${share.description}"></textarea>
                 </div>
                 <script type="text/javascript">
@@ -48,12 +49,12 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <span class="label label-info" th:each="tag : ${share.tag.split(',|，')}"
                           style="margin-left: 10px; font-size: 15px">
-                        <span class="glyphicon glyphicon-tags"></span>
+                        <span class="fa fa-tags"></span>
                         <span class="label label-info" th:text="${tag}"></span>
                     </span>
                     <br>
                     <a th:if="${share.file != null}" th:href="${share.file}" th:data-id="${share.id}" onclick="incDownLoad(this)">
-                        <span class="glyphicon glyphicon-download-alt">资源下载</span>
+                        <span class="fa fa-download">资源下载</span>
                         <span th:text="${share.downloadCount}" id="downloadCount"></span>
                     </a>
                 </div>

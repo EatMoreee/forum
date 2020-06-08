@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="nav">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">讨论区</span>
+                </button>
+                <a class="navbar-brand" href="/">讨论区</a>
+            </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">课程推荐</span>
+                </button>
+                <a class="navbar-brand" href="/recommend">课程推荐</a>
+            </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">刷题</span>
+                </button>
+                <a class="navbar-brand" href="/code">刷题</a>
+            </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">校园周边</span>
+                </button>
+                <a class="navbar-brand" href="/campus">校园周边</a>
+            </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">资源共享</span>
+                </button>
+                <a class="navbar-brand" href="/share">资源共享</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left" action="/" method="get">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="搜索问题" name="search">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown" th:if="${session.user != null && session.user.state == 0}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <span>发帖</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/publish?area=discuss" >讨论区</a></li>
+                            <li><a href="/publish?area=recommendation" >课程推荐</a></li>
+                            <li><a href="/publish?area=solution" >Coding</a></li>
+                            <li><a href="/publish?area=record" >校园周边</a></li>
+                            <li><a href="/publish?area=sharing" >资源共享</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/profile/replies"><span class="glyphicon glyphicon-bell"></span><span class="badge" th:if="${session.user != null}" th:text="${session.unReadCount}"></span></a></li>
+                    <li class="dropdown" th:if="${session.user != null}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <span th:text="${session.user.getName()}"></span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/profile/information">个人资料</a></li>
+                            <li><a href="/profile/questions">我的问题</a></li>
+                            <li><a href="/logout">退出登录</a></li>
+                        </ul>
+                    </li>
+                    <li th:if="${session.user == null}">
+                        <a href="/login">登录</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

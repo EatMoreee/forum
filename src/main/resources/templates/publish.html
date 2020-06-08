@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/css/forum.css"/>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="/css/editormd.min.css"/>
+    <link rel="stylesheet" href="/css/general.css"/>
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/Forum.js" type="application/javascript"></script>
@@ -18,7 +20,7 @@
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2>
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <span class="fa fa-plus big-icon" aria-hidden="true"></span>
                 <span th:text="${sessionName}"></span>
             </h2>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -61,28 +63,29 @@
                     <input type="text" class="form-control" th:value="${tag}" id="tag" name = "tag"
                            autocomplete="off" placeholder="添加标签，以逗号隔开" onclick="openSelectTag()">
                     <div id="select-tag" class="publish-tag-tab">
-                        <ul class="nav nav-tabs" role="tablist">
+                        <ul class="nav nav-tabs">
                             <li role="presentation" th:each="selectCategory : ${tags}" th:class="${selectCategoryStat.first ? 'active' : ''}">
-                                <a th:href="${'#'+selectCategory.categoryName}" aria-controls="home" role="tab"
+                                <a class="nav-link" th:href="${'#'+selectCategory.categoryName}" aria-controls="home" role="tab"
                                    data-toggle="tab" th:text="${selectCategory.categoryName}"></a>
                             </li>
                         </ul>
-                        <div class="tab-content">
+                        <div id="myTabContent" class="tab-content">
                             <div role="tabpanel" th:class="${selectCategoryStat.first ? 'active tab-pane' : 'tab-pane'}" th:id="${selectCategory.categoryName}"
-                                th:each="selectCategory : ${tags}">
-                                <span>
-                                    <span class="label label-info" th:each="selectTag : ${selectCategory.tags}">
-                                    <span class="glyphicon glyphicon-tags" onclick="selectTag(this)"
+                                 th:each="selectCategory : ${tags}">
+                                <span role="button">
+                                    <span class="label label-info tags-for-post tag-button" th:each="selectTag : ${selectCategory.tags}">
+                                    <span class="fa fa-tags" onclick="selectTag(this)"
                                           th:data-tag="${selectTag}" th:text="${' '+ selectTag}"></span>
                                 </span>
                                 </span>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
                 <span class="alert alert-danger" th:text="${error}" th:if="${error != null}"></span>
-                <button type="submit" class="btn btn-success">发布</button>
+                <button type="submit" class="btn btn-success" style="float:right;">发布</button>
             </form>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">

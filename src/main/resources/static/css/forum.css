@@ -4,7 +4,7 @@
 }
 
 .box {
-    border: 1px solid darkgrey;
+    border: 1px solid #DDDDDD;
 }
 
 .publish-tag-tab {
@@ -20,5 +20,5 @@
 }
 
 .label-info{
-    font-size: 12px;
+    font-size: 15px;
 }

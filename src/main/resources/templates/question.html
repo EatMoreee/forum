@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/css/forum.css"/>
     <link rel="stylesheet" href="/css/editormd.preview.min.css"/>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/css/general.css"/>
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/moment.js" type="application/javascript"></script>
@@ -23,22 +25,22 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <!--正文-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h4><span th:text="${question.title}"></span></h4>
+                <h3><span th:text="${question.title}"></span></h3>
                 <span class="text-desc" style="font-size: 12px;font-weight: normal;color: #999">
                 作者：<span th:text="${question.user.name}"></span>|
                 发布时间：<span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>|
                 阅读数：<span th:text="${question.viewCount}"></span>|
-                点赞数：<a><span class="glyphicon glyphicon-thumbs-up" th:data-id="${question.id}"
+                点赞数：<a><span class="fa fa-thumbs-o-up" th:data-id="${question.id}"
                              onclick="incQuestionLike(this)"></span>
                       </a>
                 <span th:text="${likeCount}" id="likeCount" name="likeCount"></span>
                 </span>
                 <hr>
                 <!--问题内容-->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="question-view">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 post-content" id="question-view">
                     <textarea style="display:none;" th:text="${question.description}"></textarea>
                 </div>
-                <script type="text/javascript">
+                <script type="text/javascript" class="post-content">
                     $(function () {
                         editormd.markdownToHTML("question-view",{});
                     });
@@ -48,7 +50,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <span class="label label-info" th:each="tag : ${question.tag.split(',|，')}"
                           style="margin-left: 10px; font-size: 15px">
-                        <span class="glyphicon glyphicon-tags"></span>
+                        <span class="fa fa-tags"></span>
                         <span class="label label-info" th:text="${tag}"></span>
                     </span>
                 </div>
@@ -57,7 +59,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <a th:href="@{'/publish/'+${question.id}}" style="color:#999;"
                        th:if="${session.user != null && session.user.id == question.creator}">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
+                        <span class="fa fa-pencil-square-o" aria-hidden="true">编辑</span>
                     </a>
                 </div>
             </div>
@@ -81,12 +83,12 @@
                             </h5>
                             <div th:text="${comment.content}"></div>
                             <div class="menu">
-                                <a><span class="glyphicon glyphicon-thumbs-up" th:data-id="${comment.id}"
+                                <a><span class="fa fa-thumbs-o-up" th:data-id="${comment.id}"
                                     onclick="incCommentLike(this)"></span></a>
                                 <span th:text="${comment.likeCount}" th:id="${'commentLike'+ comment.id}"></span>
-                                <a><span class="glyphicon glyphicon-comment" th:data-id="${comment.id}"
-                                         onclick="collapseComment(this)"></span></a>
-                                <span th:text="${comment.commentCount}"></span>
+                                <a><span class="fa fa-comment"></span></a>
+                                <span th:text="${comment.commentCount}" th:data-id="${comment.id}"
+                                      onclick="collapseComment(this)"></span>
                                 <span class="pull-right" th:text="${#dates.format(comment.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span>
                             </div>
 

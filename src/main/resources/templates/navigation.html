@@ -1,84 +1,106 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="../static/css/general.css">
+    <script src="../static/js/jquery-3.4.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js" type="application/javascript"></script>
+    <script type='text/javascript'>
+        // $(document).ready(function () {
+        //     $(".dropdown").hover(function () {
+        //         $(this).addClass("open");
+        //     }, function () {
+        //         $(this).removeClass("open");
+        //     });
+        // });
+        // $(window).scroll(function () {
+        //     //小屏幕下的导航条折叠
+        //     if ($(window).width() < 768) {
+        //         //点击导航链接之后，把导航选项折叠起来
+        //         $("#navbar a").click(function () {
+        //             $("#navbar").collapse('hide');
+        //         });
+        //         //滚动屏幕时，把导航选项折叠起来
+        //         $(window).scroll(function () {
+        //             $("#navbar").collapse('hide');
+        //         });
+        //     }
+        // });
+    </script>
+</head>
+
 <body>
 <div th:fragment="nav">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">讨论区</span>
-                </button>
-                <a class="navbar-brand" href="/">讨论区</a>
-            </div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">课程推荐</span>
-                </button>
-                <a class="navbar-brand" href="/recommend">课程推荐</a>
-            </div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">刷题</span>
-                </button>
-                <a class="navbar-brand" href="/code">刷题</a>
-            </div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">校园周边</span>
-                </button>
-                <a class="navbar-brand" href="/campus">校园周边</a>
-            </div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">资源共享</span>
-                </button>
-                <a class="navbar-brand" href="/share">资源共享</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left" action="/" method="get">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="搜索问题" name="search">
-                    </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
+    <div class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a href="/" class="navbar-brand">Learning Forum</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">讨论区
+<!--                        <span class="sr-only">(current)</span>-->
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/recommend">课程推荐</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  href="/code">刷题</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/campus">校园周边</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/share">资源共享</a>
+                </li>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                 </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" th:if="${session.user != null && session.user.state == 0}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">
-                            <span>发帖</span>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/publish?area=discuss" >讨论区</a></li>
-                            <li><a href="/publish?area=recommendation" >课程推荐</a></li>
-                            <li><a href="/publish?area=solution" >Coding</a></li>
-                            <li><a href="/publish?area=record" >校园周边</a></li>
-                            <li><a href="/publish?area=sharing" >资源共享</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/profile/replies"><span class="glyphicon glyphicon-bell"></span><span class="badge" th:if="${session.user != null}" th:text="${session.unReadCount}"></span></a></li>
-                    <li class="dropdown" th:if="${session.user != null}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">
-                            <span th:text="${session.user.getName()}"></span>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/profile/information">个人资料</a></li>
-                            <li><a href="/profile/questions">我的问题</a></li>
-                            <li><a href="/logout">退出登录</a></li>
-                        </ul>
-                    </li>
-                    <li th:if="${session.user == null}">
-                        <a href="/login">登录</a>
-                    </li>
+            </ul>
 
-                </ul>
-            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown dropdown-slim" th:if="${session.user != null && session.user.state == 0}">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">发帖 <span class="caret"></span></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/publish?area=discuss" >讨论区</a>
+                        <a class="dropdown-item" href="/publish?area=recommendation" >课程推荐</a>
+                        <a class="dropdown-item" href="/publish?area=solution" >Coding</a>
+                        <a class="dropdown-item" href="/publish?area=record" >校园周边</a>
+                        <a class="dropdown-item" href="/publish?area=sharing" >资源共享</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" th:if="${session.user != null && session.user.state == 0}">
+                    <a class="nav-link" href="/profile/replies">
+                        <i class="fa fa-bell" style="font-size:20px;"></i>
+                        <span class="badge" th:if="${session.user != null}" th:text="${session.unReadCount}"></span>
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown dropdown-slim" th:if="${session.user != null && session.user.state == 0}">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span th:text="${session.user.getName()}"></span><span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="download">
+                        <a class="dropdown-item" href="/profile/information">个人资料</a>
+                        <a class="dropdown-item" href="/profile/questions">我的问题</a>
+                        <a class="dropdown-item" href="/logout">退出登录</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" th:if="${session.user == null}">
+                    <a class="nav-link" href="/login">登录</a>
+                </li>
+
+            </ul>
+
         </div>
-    </nav>
+    </div>
+
 </div>
 </body>
 </html>
