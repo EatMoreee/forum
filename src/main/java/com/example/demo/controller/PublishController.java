@@ -73,30 +73,18 @@ public class PublishController {
 
     @PostMapping("/publish")
     @RequestMapping("/publish")
-    public String doPublish(HttpServletRequest request, Model model)  {
-        try {
-            request.setCharacterEncoding("UTF-8");
-        }catch (UnsupportedEncodingException e) {
-            System.out.println("无法转换");
-        }
-        String title = request.getParameter("title");
-        String description = request.getParameter("description");
-        String tag = request.getParameter("tag");
-        String test = request.getParameter("id");
-        Long id = null;
-        if (!(test == null || test.trim().equals(""))) {
-            int temp = Integer.parseInt(test);
-            id = (long) temp;
-        }
-        Integer limit = null;
-        test = request.getParameter("limit");
-        if (test == null || test.trim().equals("")) limit = 0;
-        else limit = Integer.parseInt(test);
-        String area = request.getParameter("area");
-        model.addAttribute("id", id);
-        model.addAttribute("title", title);
-        model.addAttribute("description", description);
-        model.addAttribute("tag", tag);
+    public String doPublish(@RequestParam(value = "title",required = false) String title,
+                            @RequestParam(value = "description",required = false) String description,
+                            @RequestParam(value = "tag", required = false) String tag,
+                            @RequestParam(value = "id", required = false) Long id,
+                            @RequestParam(value = "area",defaultValue = "discuss") String area,
+                            @RequestParam(value = "limit", required = false) Integer limit,
+                            HttpServletRequest request,
+                            Model model) {
+        model.addAttribute("id",id);
+        model.addAttribute("title",title);
+        model.addAttribute("description",description);
+        model.addAttribute("tag",tag);
         model.addAttribute("limit", limit);
         model.addAttribute("area", area);
         if ("discuss".equals(area)) {

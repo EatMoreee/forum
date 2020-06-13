@@ -59,6 +59,8 @@
                 </script>
                 <div class="form-group">
                     <input th:if="${area == 'sharing'}" type="file" id="upLoadFile" name="upLoadFile" >
+                    <br th:if="${area == 'sharing'}">
+                    <br th:if="${area == 'sharing'}">
                     <label for="tag">添加标签</label>
                     <input type="text" class="form-control" th:value="${tag}" id="tag" name = "tag"
                            autocomplete="off" placeholder="添加标签，以逗号隔开" onclick="openSelectTag()">
