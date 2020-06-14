@@ -83,7 +83,7 @@
                 <h4>相关问题</h4>
                 <ul style="list-style: none; font-size:13px; padding-left: 0; line-height: 20px">
                     <li th:each="related : ${relateCampus}">
-                        <a th:href="@{'/question/'+${related.id}}" th:text="${related.title}"></a>
+                        <a th:href="@{'/campus/'+${related.id}}" th:text="${related.title}"></a>
                     </li>
                 </ul>
             </div>
